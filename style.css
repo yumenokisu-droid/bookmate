@@ -1,0 +1,52 @@
+body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background-color: #FAF6F0;
+            color: #1B2A47;
+            -webkit-font-smoothing: antialiased;
+        }
+        .serif-title {
+            font-family: 'Noto Serif KR', serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF6F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D5CFC6;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B8B2A7;
+        }
+        /* Amplitude bar dynamic visual simulation */
+        .amp-bar {
+            display: inline-block;
+            width: 2px;
+            height: 14px;
+            background-color: #1B2A47;
+            margin: 0 1px;
+            animation: bounceAmp 0.8s ease-in-out infinite alternate;
+        }
+        @keyframes bounceAmp {
+            0% { height: 4px; }
+            100% { height: 18px; }
+        }
+        /* Animations */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .toast-enter {
+            animation: slideInRight 0.3s ease-out forwards;
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
