@@ -50,3 +50,31 @@ body {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+
+/* BOOKMATE v1.5 home upgrade */
+.home-question-spotlight {
+    position: relative;
+}
+.home-question-spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 18% 15%, rgba(95, 133, 117, 0.16), transparent 28%),
+        radial-gradient(circle at 88% 12%, rgba(27, 42, 71, 0.08), transparent 30%);
+    pointer-events: none;
+}
+.home-question-spotlight > div {
+    position: relative;
+    z-index: 1;
+}
+.home-soft-card {
+    min-height: 104px;
+}
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
