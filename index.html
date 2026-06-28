@@ -604,7 +604,7 @@
                 <div class="lg:col-span-2 bg-white rounded-2xl border border-brand-ivoryDark flex flex-col justify-between overflow-hidden">
                     <div class="bg-brand-ivory/80 px-5 py-4 border-b border-brand-ivoryDark flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-brand-navy rounded-full flex items-center justify-center text-white text-xs font-bold font-serif">B</div>
+                            <div class="w-8 h-8 rounded-full overflow-hidden bg-brand-ivory border border-brand-ivoryDark"><img src="assets/profile-moa/ai.png" alt="AI 프로필" class="w-full h-full object-cover"></div>
                             <div>
                                 <h3 class="font-bold text-xs text-brand-navy">AI 독서 퍼실리테이터</h3>
                                 <p class="text-[10px] text-brand-sage font-semibold" id="ai-chat-header-book">『달러구트 꿈 백화점』을 함께 깊이 읽는 중</p>
@@ -1082,14 +1082,14 @@
                                     <div>
                                         <span class="text-xs font-bold text-brand-sage tracking-wider uppercase">BOOK LOUNGE</span>
                                         <h4 class="serif-title text-xl font-bold text-brand-navy mt-1">독서 활동으로 채워가는 나만의 공간</h4>
-                                        <p class="text-xs text-gray-500 mt-1">공식 스티커를 골라 배치하고, 새로고침해도 저장되는 공모전 시연용 북라운지입니다.</p>
+                                        <p class="text-xs text-gray-500 mt-1">활동 보상을 달성할수록 자동으로 채워지는 나의 북라운지입니다.</p>
                                     </div>
                                     <div id="mypage-lounge-tags" class="flex flex-wrap gap-2">
                                         <span class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy">저장된 구성을 불러오는 중</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-xs text-brand-sageDark font-bold">
                                         <i data-lucide="paintbrush" class="w-4 h-4"></i>
-                                        북라운지에서 배경·가구·소품·모아를 바로 바꿀 수 있어요.
+                                        첫 시작은 기본 배경과 모아1, 이후 활동을 통해 아이템이 열립니다.
                                     </div>
                                 </div>
                             </div>
@@ -1113,64 +1113,49 @@
             </div>
         </section>
 
-        <!-- VIEW: Book Lounge (북라운지) - BOOKMATE v1.8 Official Sticker Lounge -->
+        <!-- VIEW: Book Lounge (북라운지) - Mission Reward Lounge -->
         <section id="view-booklounge" class="view-section hidden animate-fadeIn space-y-8">
             <div class="flex items-start justify-between gap-4 border-b border-brand-ivoryDark pb-6">
                 <div>
-                    <span class="text-xs font-bold text-brand-sage tracking-wider uppercase">BOOK LOUNGE · v1.8</span>
+                    <span class="text-xs font-bold text-brand-sage tracking-wider uppercase">BOOK LOUNGE · v1.9</span>
                     <h1 class="serif-title text-3xl font-bold text-brand-navy mt-1">나의 북라운지</h1>
-                    <p class="text-gray-500 text-xs mt-2">공식 스티커를 자유롭게 켜고 끄며 꾸미는 독서 공간입니다. 선택한 구성은 자동 저장됩니다.</p>
+                    <p class="text-gray-500 text-xs mt-2">나의 활동으로 채워지는 북라운지, 독서 인연을 늘려보세요.</p>
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="resetOfficialLounge()" class="px-4 py-2 rounded-xl bg-white border border-brand-ivoryDark text-brand-navy text-xs font-bold hover:bg-brand-ivory transition-colors">기본값</button>
-                    <button onclick="saveOfficialLounge(true)" class="px-4 py-2 rounded-xl bg-brand-navy text-white text-xs font-bold hover:bg-brand-navyLight transition-colors">저장</button>
-                </div>
+                <button onclick="document.getElementById('guestbook-modal').classList.remove('hidden')" class="px-4 py-2 rounded-xl bg-white border border-brand-ivoryDark text-brand-navy text-xs font-bold hover:bg-brand-ivory transition-colors flex items-center gap-2">
+                    <span>📔</span> 방명록 보기
+                </button>
             </div>
 
-            <div class="grid grid-cols-1 xl:grid-cols-5 gap-6">
-                <div class="xl:col-span-4 bg-white rounded-3xl border border-brand-ivoryDark shadow-sm overflow-hidden">
+            <div class="space-y-5">
+                <div class="bg-white rounded-3xl border border-brand-ivoryDark shadow-sm overflow-hidden">
                     <div class="p-5 border-b border-brand-ivoryDark flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
-                            <h2 class="serif-title text-xl font-bold text-brand-navy">Official Sticker Lounge</h2>
-                            <p id="official-lounge-stage-text" class="text-xs text-gray-500 mt-1">배경, 서가, 액자, 화분, 다과세트, 벽시계, 모아 캐릭터를 배치해보세요.</p>
+                            <h2 class="serif-title text-xl font-bold text-brand-navy">북라운지</h2>
+                            <p id="official-lounge-stage-text" class="text-xs text-gray-500 mt-1">나의 활동으로 채워지는 북라운지, 독서 인연을 늘려보세요.</p>
                         </div>
-                        <div class="text-[11px] text-gray-500 bg-brand-ivory/70 px-3 py-2 rounded-xl border border-brand-ivoryDark">
-                            공모전 시연용: 모든 스티커 획득 완료 상태
-                        </div>
+                        <div id="official-lounge-complete-badge" class="text-[11px] text-gray-500 bg-brand-ivory/70 px-3 py-2 rounded-xl border border-brand-ivoryDark">달성 현황 계산 중</div>
                     </div>
-
-                    <div class="p-4 sm:p-6 bg-[#FFFDF8]">
-                        <div id="official-lounge-main" class="official-lounge" aria-label="북라운지 꾸미기 화면"></div>
+                    <div class="p-4 sm:p-6 bg-[#FFFDF8] relative">
+                        <div id="official-lounge-main" class="official-lounge" aria-label="북라운지 화면"></div>
+                        <button onclick="document.getElementById('guestbook-modal').classList.remove('hidden')" class="lounge-guestbook-button" aria-label="북라운지 방명록 열기">📔</button>
                     </div>
                 </div>
 
-                <div class="xl:col-span-1 space-y-5">
-                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm space-y-3">
-                        <h3 class="serif-title font-bold text-lg text-brand-navy">가구</h3>
-                        <button class="lounge-option" data-lounge-toggle="shelf" onclick="toggleOfficialSticker('shelf')">📚 서가</button>
-                        <button class="lounge-option" data-lounge-toggle="frame" onclick="toggleOfficialSticker('frame')">🖼️ 액자</button>
-                        <button class="lounge-option" data-lounge-toggle="plant" onclick="toggleOfficialSticker('plant')">🌿 화분</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm space-y-3">
-                        <h3 class="serif-title font-bold text-lg text-brand-navy">소품</h3>
-                        <button class="lounge-option" data-lounge-toggle="snack" onclick="toggleOfficialSticker('snack')">🍪 다과 세트</button>
-                        <button class="lounge-option" data-lounge-toggle="clock" onclick="toggleOfficialSticker('clock')">🕒 벽시계</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm space-y-3">
-                        <h3 class="serif-title font-bold text-lg text-brand-navy">모아 배치</h3>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button class="lounge-cat-option" data-lounge-cat="cat1" onclick="setOfficialCat('cat1')">① 흰냥</button>
-                            <button class="lounge-cat-option" data-lounge-cat="cat2" onclick="setOfficialCat('cat2')">② 삼색냥</button>
-                            <button class="lounge-cat-option" data-lounge-cat="cat3" onclick="setOfficialCat('cat3')">③ 샴냥</button>
-                            <button class="lounge-cat-option" data-lounge-cat="cat4" onclick="setOfficialCat('cat4')">④ 치즈냥</button>
+                <div class="space-y-5">
+                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="serif-title font-bold text-lg text-brand-navy">나의 북메이트</h3>
+                            <button onclick="openBookmatesModal()" class="text-xs text-brand-sage font-bold hover:underline">전체보기</button>
                         </div>
+                        <div id="lounge-bookmates-list" class="lounge-bookmates-row"></div>
                     </div>
 
-                    <div class="bg-brand-ivory p-5 rounded-2xl border border-brand-ivoryDark shadow-sm">
-                        <h3 class="serif-title font-bold text-lg text-brand-navy">현재 상태</h3>
-                        <p id="official-lounge-status" class="text-xs text-gray-600 mt-2 leading-relaxed">저장된 북라운지를 불러오는 중입니다.</p>
+                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="serif-title font-bold text-lg text-brand-navy">북라운지를 채워봐요</h3>
+                            <p id="lounge-progress-text" class="text-xs text-gray-500 font-bold"></p>
+                        </div>
+                        <div id="lounge-mission-list" class="lounge-mission-grid"></div>
                     </div>
                 </div>
             </div>
@@ -1339,8 +1324,8 @@
 
     <!-- SETTINGS MODAL -->
     <div id="settings-modal" class="fixed inset-0 z-50 bg-brand-navy/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl border border-brand-ivoryDark w-full max-w-md overflow-hidden shadow-2xl">
-            <div class="bg-brand-ivory p-5 border-b border-brand-ivoryDark flex justify-between items-center">
+        <div class="bg-white rounded-2xl border border-brand-ivoryDark w-full max-w-md overflow-hidden shadow-2xl max-h-[92vh] flex flex-col">
+            <div class="bg-brand-ivory p-5 border-b border-brand-ivoryDark flex justify-between items-center shrink-0">
                 <h3 class="serif-title font-bold text-brand-navy text-lg flex items-center gap-2">
                     <i data-lucide="user-cog" class="w-5 h-5 text-brand-sage"></i> 개인 프로필 설정
                 </h3>
@@ -1348,7 +1333,7 @@
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-            <div class="p-6 space-y-5">
+            <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar">
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-brand-navy">대화명 (닉네임 - 최대 6자)</label>
                     <input id="settings-nickname" type="text" maxlength="6" placeholder="달빛독서가"
@@ -1362,8 +1347,34 @@
                         <option value="서울시립 도서관">서울시립 도서관</option>
                     </select>
                 </div>
+                <div class="space-y-3">
+                    <label class="block text-xs font-bold text-brand-navy">프로필 사진</label>
+                    <div class="flex items-center gap-4 p-4 rounded-2xl bg-brand-ivory/50 border border-brand-ivoryDark">
+                        <div id="settings-avatar-preview" class="shrink-0"></div>
+                        <div class="flex-1 text-[11px] text-gray-500 leading-relaxed">
+                            모아 캐릭터나 직접 첨부한 사진을 프로필로 사용할 수 있습니다.
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-4 gap-2">
+                        <label class="avatar-choice"><input type="radio" name="settings-avatar-type" value="moa-1" onchange="renderSettingsAvatarPreview()"><span><img src="assets/profile-moa/moa-1.png" alt="모아1"><b>모아1</b></span></label>
+                        <label class="avatar-choice"><input type="radio" name="settings-avatar-type" value="moa-2" onchange="renderSettingsAvatarPreview()"><span><img src="assets/profile-moa/moa-2.png" alt="모아2"><b>모아2</b></span></label>
+                        <label class="avatar-choice"><input type="radio" name="settings-avatar-type" value="moa-3" onchange="renderSettingsAvatarPreview()"><span><img src="assets/profile-moa/moa-3.png" alt="모아3"><b>모아3</b></span></label>
+                        <label class="avatar-choice"><input type="radio" name="settings-avatar-type" value="moa-4" onchange="renderSettingsAvatarPreview()"><span><img src="assets/profile-moa/moa-4.png" alt="모아4"><b>모아4</b></span></label>
+                    </div>
+                    <div class="flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-dashed border-brand-sage bg-brand-sageLight/40 hover:bg-brand-sageLight transition-colors">
+                        <label class="flex items-center gap-2 text-xs font-bold text-brand-navy cursor-pointer">
+                            <input type="radio" name="settings-avatar-type" value="upload" onchange="renderSettingsAvatarPreview()" class="accent-brand-sage">
+                            <i data-lucide="image-plus" class="w-4 h-4 text-brand-sage"></i> 내 사진 첨부
+                        </label>
+                        <div class="flex items-center gap-2">
+                            <span id="settings-avatar-file-name" class="text-[10px] text-gray-400 max-w-[120px] truncate">선택된 파일 없음</span>
+                            <button type="button" onclick="triggerAvatarFileInput()" class="px-3 py-1.5 rounded-lg bg-white border border-brand-ivoryDark text-[10px] font-bold text-brand-navy hover:bg-brand-ivory">파일 선택</button>
+                        </div>
+                        <input id="settings-avatar-file" type="file" accept="image/*" onchange="handleAvatarUpload(this)" class="hidden">
+                    </div>
+                </div>
             </div>
-            <div class="bg-brand-ivory px-6 py-4 border-t border-brand-ivoryDark flex justify-end gap-2">
+            <div class="bg-brand-ivory px-6 py-4 border-t border-brand-ivoryDark flex justify-end gap-2 shrink-0">
                 <button onclick="closeSettingsModal()" class="px-4 py-2 border border-brand-ivoryDark text-xs font-bold text-gray-500 hover:bg-white rounded-lg transition-colors">닫기</button>
                 <button onclick="saveProfileSettings()" class="px-5 py-2 bg-brand-navy hover:bg-brand-navyLight text-white text-xs font-bold rounded-lg transition-colors shadow">설정 저장</button>
             </div>
@@ -1551,6 +1562,21 @@
     <!-- BOOKMATE v1.3 structured scripts: load order is important -->
     <script src="js/state.js"></script>
     <script src="js/book-api.js"></script>
+
+    <!-- BOOKMATE v1.9: 북메이트 관리 팝업 -->
+    <div id="bookmates-modal" class="fixed inset-0 z-[80] hidden bg-brand-navy/40 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-[2rem] shadow-2xl overflow-hidden border border-brand-ivoryDark animate-fadeIn">
+            <div class="p-5 border-b border-brand-ivoryDark flex items-center justify-between bg-brand-ivory/60">
+                <div>
+                    <h3 class="serif-title font-bold text-lg text-brand-navy">나의 북메이트 전체보기</h3>
+                    <p class="text-[11px] text-gray-500 mt-1">북메이트 목록과 받은 초대를 관리합니다.</p>
+                </div>
+                <button onclick="closeBookmatesModal()" class="p-2 rounded-full hover:bg-white text-gray-500"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div id="bookmates-modal-list" class="p-5 space-y-3 max-h-[60vh] overflow-y-auto"></div>
+        </div>
+    </div>
+
     <!-- BOOKMATE v1.6: 작은 수첩 방명록 팝업 -->
     <div id="guestbook-modal" class="fixed inset-0 z-[80] hidden bg-brand-navy/40 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-[#FFFDF8] w-full max-w-md rounded-3xl shadow-2xl border border-brand-ivoryDark overflow-hidden animate-fadeIn">

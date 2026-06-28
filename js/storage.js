@@ -1,5 +1,6 @@
         // BOOKMATE v1.2: 사용자가 만든 모임/책/서평/선택한 표지를 브라우저에 저장
         const BOOKMATE_STORAGE_KEY = 'bookmate_v1_2_state';
+        const BOOKMATE_AVATAR_MIGRATION_KEY = 'bookmate_v1_8_9_avatar_migration_done';
 
         function saveAppState() {
             try {
@@ -27,6 +28,17 @@
                 ['currentUser', 'recentBooks', 'recentArchives', 'gatherings', 'notifications', 'socialPosts', 'aiChatHistory', 'currentAIBook'].forEach(key => {
                     if (saved[key] !== undefined) state[key] = saved[key];
                 });
+                // v1.8.9: 기존 브라우저 저장값에서 '나'가 모아4 등으로 남아 있던 문제를 1회 보정합니다.
+                // 사용자가 직접 첨부한 사진은 유지하고, 모아 기본값만 모아1로 맞춥니다.
+                if (!localStorage.getItem(BOOKMATE_AVATAR_MIGRATION_KEY)) {
+                    if (state.currentUser && state.currentUser.avatarType !== 'upload') {
+                        state.currentUser.avatarType = 'moa';
+                        state.currentUser.avatarId = 1;
+                        state.currentUser.avatarImage = '';
+                    }
+                    localStorage.setItem(BOOKMATE_AVATAR_MIGRATION_KEY, '1');
+                    try { saveAppState(); } catch(e) {}
+                }
             } catch (e) {
                 console.warn('BOOKMATE 저장 데이터 불러오기 실패:', e);
             }

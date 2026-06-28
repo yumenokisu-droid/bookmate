@@ -5,6 +5,9 @@
             currentUser: {
                 nickname: '달빛독서가',
                 library: '익산시립도서관',
+                avatarType: 'moa',
+                avatarId: 1,
+                avatarImage: '',
                 readBooksCount: 47,
                 gatheringCount: 3,
                 chatMessagesCount: 1284
