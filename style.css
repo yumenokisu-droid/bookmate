@@ -349,3 +349,26 @@ body {
         transform: scale(1.1);
     }
 }
+
+
+/* BOOKMATE lounge cleaned v2: preserve final visible positions after removing duplicate patches */
+/* animation이 transform 값을 덮어쓰지 않도록 최종 배치 요소는 애니메이션 제거 */
+.official-lounge-layer--plant,
+.official-lounge-layer--frame,
+.official-lounge-layer--shelf,
+.official-lounge-layer--snack,
+.official-lounge-layer--cat1,
+.official-lounge-layer--cat2,
+.official-lounge-layer--cat3,
+.official-lounge-layer--cat4 {
+    animation: none;
+}
+
+.official-lounge-layer--plant { transform: translate(-25px, 85px) scale(1.2) !important; }
+.official-lounge-layer--frame { transform: translateY(20px) !important; }
+.official-lounge-layer--shelf { transform: translateY(15px) !important; }
+.official-lounge-layer--snack { transform: translateX(-4px) !important; }
+.official-lounge-layer--cat1 { transform: translate(-25px, 10px) scaleX(-1) scale(1.1) !important; }
+.official-lounge-layer--cat2 { transform: translate(-4px, 15px) scaleX(1) !important; }
+.official-lounge-layer--cat3 { transform: translate(-8px, 1px) scaleX(-1) !important; }
+.official-lounge-layer--cat4 { transform: translate(0, 0) scale(1.1) !important; }
