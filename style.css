@@ -96,7 +96,7 @@ body {
 @keyframes tinyBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @media(max-width:760px){.bm-room-svg{aspect-ratio:4/3}.window{left:31%;width:38%;}.plant{left:3%;width:17%;}.shelf{right:2%;width:25%;}.table-wrap{left:38%;width:24%;top:58%;}.lounge-seat{width:20%;}.seat-main{left:20%;top:55%;}.seat-f1{left:7%;top:40%;}.seat-f2{right:7%;top:40%;}.seat-f3{left:18%;bottom:5%;}.seat-f4{right:18%;bottom:5%;}.frame{display:none}}
 
-/* BOOKMATE v1.8.4 Official Sticker Lounge - cleaned final */
+/* BOOKMATE v1.8 Official Sticker Lounge - cleaned consolidated */
 .official-lounge {
     position: relative;
     width: 100%;
@@ -109,13 +109,11 @@ body {
     border: 1px solid #F3EDE2;
     box-shadow: 0 14px 35px rgba(27, 42, 71, 0.08);
 }
-
 .official-lounge--preview {
     max-width: 360px;
     border-radius: 22px;
     box-shadow: none;
 }
-
 .official-lounge-layer {
     position: absolute;
     display: block;
@@ -123,9 +121,7 @@ body {
     user-select: none;
     -webkit-user-drag: none;
     object-fit: contain;
-    animation: loungeFadeIn .22s ease-out both;
 }
-
 .official-lounge-layer--background {
     inset: 0;
     width: 100%;
@@ -133,7 +129,6 @@ body {
     object-fit: cover;
     z-index: 1;
 }
-
 .official-lounge-layer--plant {
     width: 18.2%;
     left: 0.2%;
@@ -143,7 +138,6 @@ body {
     transform: translate(-25px, 85px) scale(1.2);
     transform-origin: center center;
 }
-
 .official-lounge-layer--frame {
     width: 22.5%;
     left: 13.0%;
@@ -151,14 +145,12 @@ body {
     z-index: 5;
     transform: translateY(20px);
 }
-
 .official-lounge-layer--clock {
     width: 20.5%;
     right: 16.0%;
     top: 10.0%;
     z-index: 4;
 }
-
 .official-lounge-layer--shelf {
     width: 53.5%;
     right: -14.6%;
@@ -167,7 +159,6 @@ body {
     z-index: 5;
     transform: translateY(15px);
 }
-
 .official-lounge-layer--snack {
     width: 23.2%;
     left: 38.4%;
@@ -175,12 +166,10 @@ body {
     z-index: 9;
     transform: translateX(-4px);
 }
-
 .official-lounge-layer--cat {
-    animation: loungeFadeIn .22s ease-out both;
+    animation: none;
     transform-origin: center center;
 }
-
 .official-lounge-layer--cat1 {
     width: 16.6%;
     left: 22.4%;
@@ -189,7 +178,6 @@ body {
     z-index: 7;
     transform: translate(-25px, 10px) scaleX(-1) scale(1.1);
 }
-
 .official-lounge-layer--cat2 {
     width: 16.6%;
     left: 62.8%;
@@ -198,7 +186,6 @@ body {
     z-index: 7;
     transform: translate(-4px, 15px) scaleX(1);
 }
-
 .official-lounge-layer--cat3 {
     width: 16.2%;
     left: 13.6%;
@@ -207,16 +194,14 @@ body {
     z-index: 10;
     transform: translate(-8px, 1px) scaleX(-1);
 }
-
 .official-lounge-layer--cat4 {
     width: 16.2%;
     left: 70.0%;
     top: 62.6%;
     bottom: auto;
     z-index: 10;
-    transform: scale(1.1);
+    transform: translate(0, 0) scale(1.1);
 }
-
 .lounge-option,
 .lounge-cat-option {
     width: 100%;
@@ -234,17 +219,14 @@ body {
     transition: .16s ease;
     text-align: left;
 }
-
 .lounge-cat-option {
     justify-content: center;
 }
-
 .lounge-option:hover,
 .lounge-cat-option:hover {
     border-color: #5F8575;
     background: #F4F8F2;
 }
-
 .lounge-option::after,
 .lounge-cat-option::after {
     content: "숨김";
@@ -255,120 +237,24 @@ body {
     border-radius: 999px;
     padding: .15rem .45rem;
 }
-
 .lounge-cat-option::after {
     margin-left: .35rem;
 }
-
 .lounge-option.active,
 .lounge-cat-option.active {
     background: #5F8575;
     color: white;
     border-color: #5F8575;
 }
-
 .lounge-option.active::after,
 .lounge-cat-option.active::after {
     content: "배치됨";
     color: #3D5A32;
     background: #fff;
 }
-
-@keyframes loungeFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
 @media(max-width:760px) {
     .official-lounge {
         aspect-ratio: 3 / 2;
         border-radius: 22px;
     }
-
-    .official-lounge-layer--plant {
-        width: 18.2%;
-        left: 0.2%;
-        top: 21.2%;
-        transform: translate(-25px, 85px) scale(1.2);
-    }
-
-    .official-lounge-layer--frame {
-        width: 22.5%;
-        left: 13.0%;
-        top: 9.8%;
-        display: block;
-        transform: translateY(20px);
-    }
-
-    .official-lounge-layer--clock {
-        width: 20.5%;
-        right: 16.0%;
-        top: 10.0%;
-    }
-
-    .official-lounge-layer--shelf {
-        width: 53.5%;
-        right: -14.6%;
-        top: 13.7%;
-        bottom: auto;
-        transform: translateY(15px);
-    }
-
-    .official-lounge-layer--snack {
-        width: 23.2%;
-        left: 38.4%;
-        bottom: 20.4%;
-        transform: translateX(-4px);
-    }
-
-    .official-lounge-layer--cat1 {
-        width: 16.6%;
-        left: 22.4%;
-        top: 41.2%;
-        transform: translate(-25px, 10px) scaleX(-1) scale(1.1);
-    }
-
-    .official-lounge-layer--cat2 {
-        width: 16.6%;
-        left: 62.8%;
-        top: 41.2%;
-        transform: translate(-4px, 15px) scaleX(1);
-    }
-
-    .official-lounge-layer--cat3 {
-        width: 16.2%;
-        left: 13.6%;
-        top: 62.0%;
-        transform: translate(-8px, 1px) scaleX(-1);
-    }
-
-    .official-lounge-layer--cat4 {
-        width: 16.2%;
-        left: 70.0%;
-        top: 62.6%;
-        transform: scale(1.1);
-    }
 }
-
-
-/* BOOKMATE lounge cleaned v2: preserve final visible positions after removing duplicate patches */
-/* animation이 transform 값을 덮어쓰지 않도록 최종 배치 요소는 애니메이션 제거 */
-.official-lounge-layer--plant,
-.official-lounge-layer--frame,
-.official-lounge-layer--shelf,
-.official-lounge-layer--snack,
-.official-lounge-layer--cat1,
-.official-lounge-layer--cat2,
-.official-lounge-layer--cat3,
-.official-lounge-layer--cat4 {
-    animation: none;
-}
-
-.official-lounge-layer--plant { transform: translate(-25px, 85px) scale(1.2) !important; }
-.official-lounge-layer--frame { transform: translateY(20px) !important; }
-.official-lounge-layer--shelf { transform: translateY(15px) !important; }
-.official-lounge-layer--snack { transform: translateX(-4px) !important; }
-.official-lounge-layer--cat1 { transform: translate(-25px, 10px) scaleX(-1) scale(1.1) !important; }
-.official-lounge-layer--cat2 { transform: translate(-4px, 15px) scaleX(1) !important; }
-.official-lounge-layer--cat3 { transform: translate(-8px, 1px) scaleX(-1) !important; }
-.official-lounge-layer--cat4 { transform: translate(0, 0) scale(1.1) !important; }
