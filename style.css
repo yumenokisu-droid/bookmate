@@ -439,3 +439,21 @@ body {
     height: 100%;
     object-fit: contain;
 }
+
+
+/* BOOKMATE v1.9: final polish */
+.bookmate-live-brief {
+    background: linear-gradient(135deg, #ffffff 0%, #fffaf2 48%, #eef6ef 100%);
+}
+.bookmate-live-brief:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 45px rgba(27, 42, 71, .08);
+}
+.header-avatar { cursor: pointer; }
+#profile-card-modal .avatar-moa img { padding: .1rem; }
+.nav-link, button, .home-soft-card, .bookmate-live-brief {
+    transition: all .18s ease;
+}
+button:active, .home-soft-card:active {
+    transform: scale(.985);
+}

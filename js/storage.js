@@ -1,6 +1,6 @@
         // BOOKMATE v1.2: 사용자가 만든 모임/책/서평/선택한 표지를 브라우저에 저장
         const BOOKMATE_STORAGE_KEY = 'bookmate_v1_2_state';
-        const BOOKMATE_AVATAR_MIGRATION_KEY = 'bookmate_v1_8_9_avatar_migration_done';
+        const BOOKMATE_AVATAR_MIGRATION_KEY = 'bookmate_v1_9_avatar_moa1_migration_done';
 
         function saveAppState() {
             try {

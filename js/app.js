@@ -52,6 +52,35 @@
             if (el) el.innerText = text;
         }
 
+        function updateHomeBrief() {
+            const avatarEl = document.getElementById('home-brief-avatar');
+            if (avatarEl) avatarEl.innerHTML = getAvatarHTML(state.currentUser, 'w-14 h-14', 'border-4 border-white shadow-sm');
+            safeSetText('home-brief-title', `${state.currentUser.nickname}님, 오늘도 북메이트와 함께할 준비 되셨나요?`);
+            const joinedCount = state.gatherings ? state.gatherings.filter(g => g.joined).length : 2;
+            safeSetText('home-brief-subtitle', `오늘은 ${Math.max(2, Math.min(joinedCount, 3))}개의 독서모임이 열리고, 북메이트 3명이 새로운 글을 남겼어요.`);
+        }
+
+        function openProfileCard() {
+            normalizeAvatarTarget(state.currentUser);
+            const modal = document.getElementById('profile-card-modal');
+            const avatar = document.getElementById('profile-card-avatar');
+            if (avatar) avatar.innerHTML = getAvatarHTML(state.currentUser, 'w-24 h-24', 'border-4 border-white shadow-md');
+            safeSetText('profile-card-name', state.currentUser.nickname);
+            safeSetText('profile-card-library', state.currentUser.library);
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeProfileCard() {
+            const modal = document.getElementById('profile-card-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
         function toggleArchiveDetail(idNum) {
             const detailEl = document.getElementById(`archive-detail-${idNum}`);
             const iconEl = document.getElementById(`archive-icon-${idNum}`);
@@ -89,6 +118,7 @@
             safeSetText('meeting-leader-name-span', nickname);
             safeSetText('my-gathering-count-val', state.gatherings.filter(g=>g.joined).length);
 
+            updateHomeBrief();
             renderMyPageNotifications();
             renderMyPageRecentBooks();
             renderReadingTimeline();
@@ -1762,6 +1792,7 @@
             renderRecommendationRanking();
             renderGatheringsGrid();
             renderMyPageGatherings();
+            loadBookCover('채식주의자', 'home-question-cover', 'w-14 h-20 object-cover rounded-xl shadow-sm', 'https://image.aladin.co.kr/product/29137/2/cover500/8936434594_2.jpg', { title: '채식주의자', author: '한강', isbn: '9788936434595' });
             preloadBookCovers([...state.recentBooks, ...state.gatherings.map(g => ({ title: g.book, author: g.author, isbn: g.isbn, coverUrl: g.coverUrl }))]);
             
             // AI 채팅 초기화 호출
