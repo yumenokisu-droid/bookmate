@@ -78,3 +78,414 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+
+/* BOOKMATE v1.7 Sticker Book Lounge - acquired sticker slots */
+.bm-lounge{width:100%;max-width:980px;margin:0 auto;}
+.bm-room-svg{position:relative;aspect-ratio:16/10;border:3px solid #191919;border-radius:28px;overflow:hidden;background:#fff8ee;box-shadow:0 8px 0 rgba(25,25,25,.06);}
+.bm-room-svg:before{content:"";position:absolute;left:0;right:0;bottom:0;height:38%;background:#f1d0ae;border-top:3px solid #191919;background-image:repeating-linear-gradient(0deg,rgba(25,25,25,.08) 0 2px,transparent 2px 36px);}
+.bm-room-svg:after{content:"";position:absolute;inset:12px;border-radius:22px;border:2px solid rgba(255,255,255,.65);pointer-events:none;}
+.lounge-bg,.lounge-sticker,.lounge-seat{position:absolute;display:block;user-select:none;-webkit-user-drag:none;filter:drop-shadow(0 5px 0 rgba(25,25,25,.08));}
+.window{left:34%;top:6%;width:31%;z-index:1;}.rug{left:21%;bottom:4%;width:58%;z-index:1;filter:none;}
+.lounge-sticker,.lounge-seat[data-sticker]{opacity:0;transform:translateY(12px) scale(.92);pointer-events:none;transition:opacity .25s ease,transform .25s ease;}
+.lounge-sticker.acquired,.lounge-seat.acquired,.lounge-seat[data-sticker].acquired{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
+.plant{left:7%;top:38.8%;width:14%;z-index:3;}.shelf{right:6%;top:19%;width:22%;z-index:3;}.frame{left:47%;top:30%;width:8%;z-index:2;}.table-wrap{left:39.8%;top:56%;width:20%;z-index:7;}
+.table-base{width:100%;display:block;filter:drop-shadow(0 5px 0 rgba(25,25,25,.08));}.table-small-item{position:absolute;display:none;width:34px;height:34px;align-items:center;justify-content:center;border:3px solid #191919;background:#fff9ee;border-radius:999px;font-size:18px;line-height:1;filter:drop-shadow(0 3px 0 rgba(25,25,25,.08));}.table-small-item.acquired{display:flex;}.table-small-item.mug{left:20%;top:16%;background:#b7dcdd}.table-small-item.book{left:43%;top:10%;background:#fff9ee}.table-small-item.note{right:18%;top:18%;background:#f7d56f;font-weight:900;color:#191919;}
+.lounge-seat{width:17%;z-index:6;}.seat-main{left:22%;top:54%;opacity:1!important;transform:none!important;}.seat-f1{left:15%;top:37%;transform:scaleX(-1)!important;}.seat-f2{right:13.5%;top:38%;transform:scaleX(1)!important;}.seat-f3{left:23%;bottom:5.7%;z-index:8;transform:scaleX(-1)!important;}.seat-f4{right:23%;bottom:5%;z-index:8;}.seat-beanbag{width:100%;display:block;}.seat-cat{position:absolute;left:26%;bottom:29%;width:48%;filter:drop-shadow(0 3px 0 rgba(25,25,25,.06));animation:tinyBob 2.8s ease-in-out infinite;}
+.acquire-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.75rem .85rem;border:1px solid #F3EDE2;background:#FAF6F0;border-radius:1rem;color:#1B2A47;font-size:12px;font-weight:800;transition:.16s ease;text-align:left;}.acquire-btn:hover{border-color:#5F8575;background:#F4F8F2}.acquire-btn::after{content:"획득";font-size:10px;color:#6b7280;background:white;border:1px solid #F3EDE2;border-radius:999px;padding:.15rem .45rem;}.acquire-btn.active{background:#5F8575;color:white;border-color:#5F8575}.acquire-btn.active::after{content:"배치됨";color:#3D5A32;background:#fff}.acquire-btn.small{justify-content:center;padding:.65rem .4rem;font-size:11px;}.acquire-btn.small::after{display:none;}
+@keyframes tinyBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media(max-width:760px){.bm-room-svg{aspect-ratio:4/3}.window{left:31%;width:38%;}.plant{left:3%;width:17%;}.shelf{right:2%;width:25%;}.table-wrap{left:38%;width:24%;top:58%;}.lounge-seat{width:20%;}.seat-main{left:20%;top:55%;}.seat-f1{left:7%;top:40%;}.seat-f2{right:7%;top:40%;}.seat-f3{left:18%;bottom:5%;}.seat-f4{right:18%;bottom:5%;}.frame{display:none}}
+
+
+/* BOOKMATE v1.8 Official Sticker Lounge */
+.official-lounge {
+    position: relative;
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 28px;
+    background: #fff8ee;
+    border: 1px solid #F3EDE2;
+    box-shadow: 0 14px 35px rgba(27, 42, 71, 0.08);
+}
+.official-lounge--preview {
+    max-width: 360px;
+    border-radius: 22px;
+    box-shadow: none;
+}
+.official-lounge-layer {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    object-fit: contain;
+    animation: stickerPop .22s ease-out both;
+}
+.official-lounge-layer--background {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+.official-lounge-layer--clock {
+    width: 16%;
+    right: calc(9% + 20px);
+    top: 8%;
+    z-index: 3;
+}
+.official-lounge-layer--frame {
+    width: 22%;
+    left: calc(8% - 20px);
+    top: 10%;
+    z-index: 3;
+}
+.official-lounge-layer--shelf {
+    width: 38%;
+    right: calc(2% - 4px);
+    top: 27%;
+    z-index: 4;
+}
+.official-lounge-layer--plant {
+    width: 19%;
+    left: 6%;
+    bottom: 3%;
+    z-index: 5;
+}
+.official-lounge-layer--snack {
+    width: 25%;
+    left: 37%;
+    bottom: 7%;
+    z-index: 6;
+}
+.official-lounge-layer--cat {
+    width: 20%;
+    left: 26%;
+    bottom: 5%;
+    z-index: 7;
+    animation: stickerPop .22s ease-out both, tinyBob 3s ease-in-out infinite .25s;
+}
+.lounge-option,
+.lounge-cat-option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .55rem;
+    padding: .75rem .85rem;
+    border: 1px solid #F3EDE2;
+    background: #FAF6F0;
+    border-radius: 1rem;
+    color: #1B2A47;
+    font-size: 12px;
+    font-weight: 800;
+    transition: .16s ease;
+    text-align: left;
+}
+.lounge-cat-option { justify-content: center; }
+.lounge-option:hover,
+.lounge-cat-option:hover {
+    border-color: #5F8575;
+    background: #F4F8F2;
+}
+.lounge-option::after {
+    content: "숨김";
+    font-size: 10px;
+    color: #6b7280;
+    background: white;
+    border: 1px solid #F3EDE2;
+    border-radius: 999px;
+    padding: .15rem .45rem;
+}
+.lounge-option.active,
+.lounge-cat-option.active {
+    background: #5F8575;
+    color: white;
+    border-color: #5F8575;
+}
+.lounge-option.active::after {
+    content: "배치됨";
+    color: #3D5A32;
+    background: #fff;
+}
+@keyframes stickerPop {
+    from { opacity: 0; transform: translateY(10px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media(max-width:760px){
+    .official-lounge{aspect-ratio:4/3;border-radius:22px;}
+    .official-lounge-layer--shelf{width:43%;right:-3%;top:31%;}
+    .official-lounge-layer--plant{width:22%;left:3%;}
+    .official-lounge-layer--snack{width:28%;left:36%;bottom:6%;}
+    .official-lounge-layer--cat{width:23%;left:24%;bottom:5%;}
+    .official-lounge-layer--frame{width:24%;left:6%;top:11%;}
+    .official-lounge-layer--clock{width:17%;right:8%;top:9%;}
+}
+/* BOOKMATE v1.8.1 fixed composition based on reference lounge image */
+.official-lounge-layer--plant {
+    width: 36%;
+    left: -7%;
+    top: 10%;
+    bottom: auto;
+    z-index: 4;
+}
+.official-lounge-layer--frame {
+    width: 30%;
+    left: -1%;
+    top: 3%;
+    z-index: 4;
+}
+.official-lounge-layer--clock {
+    width: 28%;
+    right: 15%;
+    top: 5%;
+    z-index: 4;
+}
+.official-lounge-layer--shelf {
+    width: 57%;
+    right: -16%;
+    top: 1%;
+    z-index: 5;
+}
+.official-lounge-layer--snack {
+    width: 39%;
+    left: 30.5%;
+    bottom: 13.2%;
+    z-index: 9;
+}
+.official-lounge-layer--cat {
+    width: 14.6%;
+    z-index: 8;
+    animation: none;
+    transform-origin: center center;
+}
+.official-lounge-layer--cat1 {
+    left: 22.1%;
+    top: 35.3%;
+    bottom: auto;
+    transform: scaleX(-1);
+    z-index: 7;
+}
+.official-lounge-layer--cat2 {
+    left: 65.0%;
+    top: 35.7%;
+    bottom: auto;
+    transform: scaleX(1);
+    z-index: 7;
+}
+.official-lounge-layer--cat3 {
+    width: 15.2%;
+    left: 13.0%;
+    top: 60.2%;
+    bottom: auto;
+    transform: scaleX(-1);
+    z-index: 10;
+}
+.official-lounge-layer--cat4 {
+    width: 15.2%;
+    left: 72.0%;
+    top: 60.5%;
+    bottom: auto;
+    transform: scaleX(1);
+    z-index: 10;
+}
+.lounge-cat-option::after {
+    content: "숨김";
+    font-size: 10px;
+    color: #6b7280;
+    background: white;
+    border: 1px solid #F3EDE2;
+    border-radius: 999px;
+    padding: .15rem .45rem;
+    margin-left: .35rem;
+}
+.lounge-cat-option.active::after {
+    content: "배치됨";
+    color: #3D5A32;
+    background: #fff;
+}
+@media(max-width:760px){
+    .official-lounge{aspect-ratio:3/2;border-radius:22px;}
+    .official-lounge-layer--plant{width:36%;left:-7%;top:10%;}
+    .official-lounge-layer--frame{width:30%;left:-1%;top:3%;display:block;}
+    .official-lounge-layer--clock{width:28%;right:15%;top:5%;}
+    .official-lounge-layer--shelf{width:57%;right:-16%;top:1%;}
+    .official-lounge-layer--snack{width:39%;left:30.5%;bottom:13.2%;}
+    .official-lounge-layer--cat1{width:14.6%;left:22.1%;top:35.3%;}
+    .official-lounge-layer--cat2{width:14.6%;left:65.0%;top:35.7%;}
+    .official-lounge-layer--cat3{width:15.2%;left:13.0%;top:60.2%;}
+    .official-lounge-layer--cat4{width:15.2%;left:72.0%;top:60.5%;}
+}
+/* Reference-tuned coordinates: 1535x1024 기준 고정 슬롯 */
+.official-lounge-layer--frame{width:24%;left:5.2%;top:6.5%;}
+.official-lounge-layer--clock{width:22%;right:20.0%;top:7.0%;}
+.official-lounge-layer--snack{width:31%;left:34.5%;bottom:15.4%;}
+.official-lounge-layer--cat1{width:17.5%;left:21.1%;top:37.0%;transform:scaleX(-1);}
+.official-lounge-layer--cat2{width:17.5%;left:63.8%;top:42.5%;transform:scaleX(1);}
+.official-lounge-layer--cat3{width:16.8%;left:13.8%;top:60.5%;transform:scaleX(-1);}
+.official-lounge-layer--cat4{width:16.8%;left:71.0%;top:60.2%;transform:scaleX(1);}
+@media(max-width:760px){
+    .official-lounge-layer--frame{width:24%;left:5.2%;top:6.5%;}
+    .official-lounge-layer--clock{width:22%;right:20.0%;top:7.0%;}
+    .official-lounge-layer--snack{width:31%;left:34.5%;bottom:15.4%;}
+    .official-lounge-layer--cat1{width:17.5%;left:21.1%;top:37.0%;}
+    .official-lounge-layer--cat2{width:17.5%;left:63.8%;top:42.5%;}
+    .official-lounge-layer--cat3{width:16.8%;left:13.8%;top:60.5%;}
+    .official-lounge-layer--cat4{width:16.8%;left:71.0%;top:60.2%;}
+}
+
+/* BOOKMATE v1.8.4: tuned from current screenshot - furniture floor alignment and beanbag seating polish */
+.official-lounge-layer--plant{
+    width:18.2%;
+    left:0.2%;
+    top:21.2%;
+    bottom:auto;
+    z-index:4;
+}
+.official-lounge-layer--frame{
+    width:22.5%;
+    left:13.0%;
+    top:9.8%;
+    z-index:5;
+}
+.official-lounge-layer--clock{
+    width:20.5%;
+    right:16.0%;
+    top:10.0%;
+    z-index:4;
+}
+.official-lounge-layer--shelf{
+    width:53.5%;
+    right:-14.6%;
+    top:13.7%;
+    bottom:auto;
+    z-index:5;
+}
+.official-lounge-layer--snack{
+    width:23.2%;
+    left:38.4%;
+    bottom:20.4%;
+    z-index:9;
+}
+.official-lounge-layer--cat{
+    animation:none;
+    transform-origin:center center;
+}
+.official-lounge-layer--cat1{
+    width:16.6%;
+    left:22.4%;
+    top:41.2%;
+    bottom:auto;
+    transform:scaleX(-1);
+    z-index:7;
+}
+.official-lounge-layer--cat2{
+    width:16.6%;
+    left:62.8%;
+    top:41.2%;
+    bottom:auto;
+    transform:scaleX(1);
+    z-index:7;
+}
+.official-lounge-layer--cat3{
+    width:16.2%;
+    left:13.6%;
+    top:62.0%;
+    bottom:auto;
+    transform:scaleX(-1);
+    z-index:10;
+}
+.official-lounge-layer--cat4{
+    width:16.2%;
+    left:70.0%;
+    top:62.6%;
+    bottom:auto;
+    transform:scaleX(1);
+    z-index:10;
+}
+@media(max-width:760px){
+    .official-lounge-layer--plant{width:18.2%;left:0.2%;top:21.2%;}
+    .official-lounge-layer--frame{width:22.5%;left:13.0%;top:9.8%;}
+    .official-lounge-layer--clock{width:20.5%;right:16.0%;top:10.0%;}
+    .official-lounge-layer--shelf{width:53.5%;right:-14.6%;top:13.7%;bottom:auto;}
+    .official-lounge-layer--snack{width:23.2%;left:38.4%;bottom:20.4%;}
+    .official-lounge-layer--cat1{width:16.6%;left:22.4%;top:41.2%;}
+    .official-lounge-layer--cat2{width:16.6%;left:62.8%;top:41.2%;}
+    .official-lounge-layer--cat3{width:16.2%;left:13.6%;top:62.0%;}
+    .official-lounge-layer--cat4{width:16.2%;left:70.0%;top:62.6%;}
+}
+
+
+.official-lounge-layer--plant{transform:translate(-40px,80px);}
+.official-lounge-layer--cat1{transform:translate(-25px,10px) scale(1);}
+.official-lounge-layer--cat2{transform:translate(-25px,-2px) scale(1);}
+.official-lounge-layer--cat3{transform:translate(0,13px) scale(1);}
+
+/* BOOKMATE v1.8.4 final micro-adjustments: requested 2026-06-27 */
+.official-lounge-layer--frame{
+    transform:translateY(5px);
+}
+.official-lounge-layer--plant{
+    transform:translate(-40px,85px);
+}
+.official-lounge-layer--shelf{
+    transform:translateY(5px);
+}
+.official-lounge-layer--snack{
+    transform:translateX(-2px);
+}
+.official-lounge-layer--cat1{
+    transform:translate(-25px,10px) scaleX(-1) !important;
+}
+.official-lounge-layer--cat2{
+    transform:translate(-25px,10px) scaleX(1) !important;
+}
+.official-lounge-layer--cat3{
+    transform:translate(0,6px) scaleX(-1) !important;
+}
+.official-lounge-layer--cat4{
+    transform:translate(0,0) scaleX(1) !important;
+}
+
+/* BOOKMATE v1.8.4 lounge final coding patch: user requested precise 2026-06-27 */
+/* 기준: 직전 수정본에서 상대 이동 적용 */
+.official-lounge-layer--plant{
+    transform:translate(-35px,95px) scale(1.2) !important; /* 오른쪽 5px + 120% */
+}
+.official-lounge-layer--shelf{
+    transform:translateY(15px) !important; /* 아래로 10px 추가 */
+}
+.official-lounge-layer--snack{
+    transform:translateX(-4px) !important; /* 왼쪽으로 2px 추가 */
+}
+.official-lounge-layer--cat1{
+    transform:translate(-25px,10px) scaleX(-1) scale(1.1) !important; /* 110% 확대 */
+}
+.official-lounge-layer--cat2{
+    transform:translate(-12px,15px) scaleX(1) !important; /* 오른쪽 8px 추가 */
+}
+.official-lounge-layer--cat3{
+    transform:translate(-5px,1px) scaleX(-1) !important; /* 왼쪽 5px, 위 5px 추가 + 좌우반전 유지 */
+}
+.official-lounge-layer--cat4{
+    transform:translate(0,0) scale(1.1) !important; /* 110% 확대 */
+}
+
+
+/* BOOKMATE v1.8.4 lounge final patch4: user requested precise code movement */
+/* 기준: patch2 현재 상태에서 상대 이동 적용 */
+.official-lounge-layer--plant{
+    transform:translate(-25px,85px) scale(1.2) !important; /* 오른쪽 10px, 위로 10px 이동 */
+}
+.official-lounge-layer--frame{
+    transform:translateY(20px) !important; /* 기존 5px 아래 + 추가 15px */
+}
+.official-lounge-layer--cat2{
+    transform:translate(-4px,15px) scaleX(1) !important; /* 오른쪽 8px 이동 */
+}
+.official-lounge-layer--cat3{
+    transform:translate(-8px,1px) scaleX(-1) !important; /* 왼쪽 3px 이동 */
+}

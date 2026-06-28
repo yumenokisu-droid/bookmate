@@ -1642,3 +1642,140 @@
             loadBookCover('도둑맞은 집중력', 'archive-cover-focus', 'w-12 h-16 object-cover rounded shadow');
             loadBookCover('도둑맞은 집중력', 'archive-cover-habits', 'w-12 h-16 object-cover rounded shadow');
         }
+
+// BOOKMATE v1.8: Official PNG Sticker Book Lounge
+const OFFICIAL_LOUNGE_STORAGE_KEY = 'bookmate_official_lounge_v1_8_fixed_slots';
+const OFFICIAL_LOUNGE_ASSET_PATH = 'assets/lounge-official/';
+const OFFICIAL_LOUNGE_LABELS = {
+  shelf: '서가',
+  frame: '액자',
+  plant: '화분',
+  snack: '다과 세트',
+  clock: '벽시계'
+};
+const OFFICIAL_LOUNGE_CATS = {
+  cat1: { name: '흰냥', src: 'cat-white-trim.png', slot: '왼쪽 위' },
+  cat2: { name: '삼색냥', src: 'cat-calico-trim.png', slot: '오른쪽 위' },
+  cat3: { name: '샴냥', src: 'cat-siam-trim.png', slot: '왼쪽 아래' },
+  cat4: { name: '치즈냥', src: 'cat-cheese-trim.png', slot: '오른쪽 아래' }
+};
+const OFFICIAL_LOUNGE_DEFAULT = {
+  stickers: { shelf: true, frame: true, plant: true, snack: true, clock: true },
+  cats: { cat1: true, cat2: true, cat3: true, cat4: true }
+};
+let officialLoungeState = JSON.parse(JSON.stringify(OFFICIAL_LOUNGE_DEFAULT));
+
+function cloneOfficialLoungeDefault() {
+  return JSON.parse(JSON.stringify(OFFICIAL_LOUNGE_DEFAULT));
+}
+
+function loadOfficialLounge() {
+  try {
+    const saved = localStorage.getItem(OFFICIAL_LOUNGE_STORAGE_KEY);
+    if (!saved) {
+      officialLoungeState = cloneOfficialLoungeDefault();
+      return;
+    }
+    const parsed = JSON.parse(saved);
+    officialLoungeState = {
+      stickers: { ...OFFICIAL_LOUNGE_DEFAULT.stickers, ...(parsed.stickers || {}) },
+      cats: { ...OFFICIAL_LOUNGE_DEFAULT.cats, ...(parsed.cats || {}) }
+    };
+  } catch (error) {
+    officialLoungeState = cloneOfficialLoungeDefault();
+  }
+}
+
+function saveOfficialLounge(showMessage = false) {
+  localStorage.setItem(OFFICIAL_LOUNGE_STORAGE_KEY, JSON.stringify(officialLoungeState));
+  renderOfficialLounge();
+  if (showMessage && typeof showToast === 'function') showToast('북라운지가 저장되었습니다.');
+}
+
+function getOfficialLoungeLayers() {
+  const layers = [
+    { key: 'background', src: 'background.png', alt: '기본 배경', always: true },
+    { key: 'plant', src: 'plant.png', alt: '화분' },
+    { key: 'frame', src: 'frame.png', alt: '액자' },
+    { key: 'clock', src: 'clock.png', alt: '벽시계' },
+    { key: 'shelf', src: 'shelf.png', alt: '서가' },
+    { key: 'snack', src: 'snack.png', alt: '다과 세트' },
+    ...Object.entries(OFFICIAL_LOUNGE_CATS).map(([key, cat]) => ({
+      key,
+      src: cat.src,
+      alt: `모아 ${cat.name} ${cat.slot}`,
+      isCat: true
+    }))
+  ];
+  return layers.filter(layer => {
+    if (layer.always) return true;
+    if (layer.isCat) return officialLoungeState.cats[layer.key];
+    return officialLoungeState.stickers[layer.key];
+  });
+}
+
+function buildOfficialLoungeHTML() {
+  return getOfficialLoungeLayers().map(layer => {
+    const catClass = layer.isCat ? ` official-lounge-layer--cat official-lounge-layer--${layer.key}` : '';
+    return `<img class="official-lounge-layer official-lounge-layer--${layer.key}${catClass}" src="${OFFICIAL_LOUNGE_ASSET_PATH}${layer.src}" alt="${layer.alt}">`;
+  }).join('');
+}
+
+function renderOfficialLounge() {
+  const html = buildOfficialLoungeHTML();
+  document.querySelectorAll('#official-lounge-main, #mypage-lounge-preview').forEach(container => {
+    if (container) container.innerHTML = html;
+  });
+
+  Object.keys(OFFICIAL_LOUNGE_LABELS).forEach(key => {
+    document.querySelectorAll(`[data-lounge-toggle="${key}"]`).forEach(btn => {
+      btn.classList.toggle('active', !!officialLoungeState.stickers[key]);
+    });
+  });
+  Object.keys(OFFICIAL_LOUNGE_CATS).forEach(key => {
+    document.querySelectorAll(`[data-lounge-cat="${key}"]`).forEach(btn => {
+      btn.classList.toggle('active', !!officialLoungeState.cats[key]);
+    });
+  });
+
+  const activeNames = Object.keys(OFFICIAL_LOUNGE_LABELS)
+    .filter(key => officialLoungeState.stickers[key])
+    .map(key => OFFICIAL_LOUNGE_LABELS[key]);
+  const activeCats = Object.entries(OFFICIAL_LOUNGE_CATS)
+    .filter(([key]) => officialLoungeState.cats[key])
+    .map(([, cat]) => `${cat.name}(${cat.slot})`);
+  const status = document.getElementById('official-lounge-status');
+  if (status) status.textContent = `배치 중: ${activeNames.join(', ')} · 모아: ${activeCats.join(', ')}`;
+
+  const stageText = document.getElementById('official-lounge-stage-text');
+  if (stageText) stageText.textContent = '예시 이미지 기준으로 가구·소품·모아 4마리의 좌표와 크기를 고정했습니다.';
+
+  const tags = document.getElementById('mypage-lounge-tags');
+  if (tags) {
+    const tagItems = [...activeNames, ...activeCats].map(name =>
+      `<span class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy">${name}</span>`
+    ).join('');
+    tags.innerHTML = tagItems || '<span class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy">기본 배경</span>';
+  }
+}
+
+window.toggleOfficialSticker = function(key) {
+  if (!Object.prototype.hasOwnProperty.call(OFFICIAL_LOUNGE_LABELS, key)) return;
+  officialLoungeState.stickers[key] = !officialLoungeState.stickers[key];
+  saveOfficialLounge(false);
+};
+
+window.setOfficialCat = function(catKey) {
+  if (!OFFICIAL_LOUNGE_CATS[catKey]) return;
+  officialLoungeState.cats[catKey] = !officialLoungeState.cats[catKey];
+  saveOfficialLounge(false);
+};
+
+window.resetOfficialLounge = function() {
+  officialLoungeState = cloneOfficialLoungeDefault();
+  saveOfficialLounge(false);
+  if (typeof showToast === 'function') showToast('북라운지를 기본 구성으로 되돌렸습니다.');
+};
+
+loadOfficialLounge();
+setTimeout(renderOfficialLounge, 0);

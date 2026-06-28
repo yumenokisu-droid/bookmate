@@ -1065,39 +1065,31 @@
                         </div>
                     </div>
 
-                    <!-- BOOKMATE v1.6: 북라운지 미리보기 카드 -->
+                    <!-- BOOKMATE v1.8: 북라운지 미리보기 카드 -->
                     <div class="space-y-3">
                         <div class="flex items-center justify-between">
                             <h3 class="serif-title font-bold text-lg text-brand-navy flex items-center gap-2">
                                 <i data-lucide="armchair" class="w-5 h-5 text-brand-sage"></i> 나의 북라운지
                             </h3>
-                            <button onclick="navigate('booklounge')" class="text-xs text-brand-sage font-bold hover:underline">둘러보기</button>
+                            <button onclick="navigate('booklounge')" class="text-xs text-brand-sage font-bold hover:underline">꾸미러가기</button>
                         </div>
                         <div class="bg-white rounded-2xl border border-brand-ivoryDark shadow-sm overflow-hidden cursor-pointer hover:border-brand-sage transition-all" onclick="navigate('booklounge')">
                             <div class="grid grid-cols-1 md:grid-cols-5">
-                                <div class="md:col-span-2 min-h-[170px] bg-gradient-to-br from-brand-sageLight via-brand-ivory to-white p-5 flex items-end relative overflow-hidden">
-                                    <div class="absolute top-5 left-5 w-16 h-20 rounded-xl bg-brand-navy/10 border border-white/70"></div>
-                                    <div class="absolute top-8 right-6 w-12 h-12 rounded-full bg-white/70 border border-brand-ivoryDark flex items-center justify-center">🌿</div>
-                                    <div class="absolute bottom-8 right-10 w-20 h-14 rounded-2xl bg-brand-sage/20 border border-white/70"></div>
-                                    <div class="relative z-10 bg-white/85 backdrop-blur px-3 py-2 rounded-xl shadow-sm border border-white text-xs font-bold text-brand-navy">
-                                        책을 읽고, 사람을 만나며 채워가는 공간
-                                    </div>
+                                <div class="md:col-span-2 p-3 bg-[#FFFDF8]">
+                                    <div id="mypage-lounge-preview" class="official-lounge official-lounge--preview" aria-label="북라운지 미리보기"></div>
                                 </div>
                                 <div class="md:col-span-3 p-5 space-y-4">
                                     <div>
                                         <span class="text-xs font-bold text-brand-sage tracking-wider uppercase">BOOK LOUNGE</span>
-                                        <h4 class="serif-title text-xl font-bold text-brand-navy mt-1">오늘은 민지님이 다녀갔어요</h4>
-                                        <p class="text-xs text-gray-500 mt-1">북라운지는 기존 내 서재를 대신하지 않고, 독서로 만난 인연을 담아두는 작은 공간이에요.</p>
+                                        <h4 class="serif-title text-xl font-bold text-brand-navy mt-1">독서 활동으로 채워가는 나만의 공간</h4>
+                                        <p class="text-xs text-gray-500 mt-1">공식 스티커를 골라 배치하고, 새로고침해도 저장되는 공모전 시연용 북라운지입니다.</p>
                                     </div>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy">📚 책장</span>
-                                        <span class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy">☕ 머그컵</span>
-                                        <span class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy">💡 스탠드</span>
-                                        <span class="px-3 py-1.5 rounded-full bg-brand-sageLight border border-brand-sage/20 text-[10px] font-bold text-brand-sageDark">👥 북메이트 6명</span>
+                                    <div id="mypage-lounge-tags" class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy">저장된 구성을 불러오는 중</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-xs text-brand-sageDark font-bold">
-                                        <i data-lucide="notebook-tabs" class="w-4 h-4"></i>
-                                        작은 방명록은 수첩처럼 열어볼 수 있어요.
+                                        <i data-lucide="paintbrush" class="w-4 h-4"></i>
+                                        북라운지에서 배경·가구·소품·모아를 바로 바꿀 수 있어요.
                                     </div>
                                 </div>
                             </div>
@@ -1121,75 +1113,64 @@
             </div>
         </section>
 
-        <!-- VIEW: Book Lounge (북라운지) -->
+        <!-- VIEW: Book Lounge (북라운지) - BOOKMATE v1.8 Official Sticker Lounge -->
         <section id="view-booklounge" class="view-section hidden animate-fadeIn space-y-8">
             <div class="flex items-start justify-between gap-4 border-b border-brand-ivoryDark pb-6">
                 <div>
-                    <span class="text-xs font-bold text-brand-sage tracking-wider uppercase">BOOK LOUNGE</span>
+                    <span class="text-xs font-bold text-brand-sage tracking-wider uppercase">BOOK LOUNGE · v1.8</span>
                     <h1 class="serif-title text-3xl font-bold text-brand-navy mt-1">나의 북라운지</h1>
-                    <p class="text-gray-500 text-xs mt-2">내 서재의 기록을 바탕으로, 책을 통해 만난 인연과 작은 추억을 담는 공간입니다.</p>
+                    <p class="text-gray-500 text-xs mt-2">공식 스티커를 자유롭게 켜고 끄며 꾸미는 독서 공간입니다. 선택한 구성은 자동 저장됩니다.</p>
                 </div>
-                <button onclick="navigate('mypage')" class="px-4 py-2 rounded-xl bg-white border border-brand-ivoryDark text-brand-navy text-xs font-bold hover:bg-brand-ivory transition-colors">내 서재로</button>
+                <div class="flex gap-2">
+                    <button onclick="resetOfficialLounge()" class="px-4 py-2 rounded-xl bg-white border border-brand-ivoryDark text-brand-navy text-xs font-bold hover:bg-brand-ivory transition-colors">기본값</button>
+                    <button onclick="saveOfficialLounge(true)" class="px-4 py-2 rounded-xl bg-brand-navy text-white text-xs font-bold hover:bg-brand-navyLight transition-colors">저장</button>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                <div class="lg:col-span-3 bg-white rounded-3xl border border-brand-ivoryDark shadow-sm overflow-hidden">
-                    <div class="relative min-h-[420px] bg-gradient-to-br from-[#fbf2e5] via-white to-brand-sageLight p-6 sm:p-8">
-                        <div class="absolute inset-0 opacity-60" style="background: radial-gradient(circle at 80% 20%, rgba(95,133,117,.18), transparent 26%), radial-gradient(circle at 15% 85%, rgba(234,208,180,.45), transparent 24%);"></div>
-                        <div class="relative z-10 space-y-5">
-                            <div>
-                                <h2 class="serif-title text-2xl font-bold text-brand-navy">책을 읽고, 사람을 만나며 천천히 채워가는 공간 🌿</h2>
-                                <p class="text-sm text-gray-500 mt-2">성장도나 점수 대신, 독서 활동과 만남의 흔적을 조용히 모아둡니다.</p>
-                            </div>
-                            <div class="mt-8 grid grid-cols-3 gap-4 max-w-md">
-                                <div class="aspect-square rounded-3xl bg-white/85 border border-white shadow-sm flex flex-col items-center justify-center gap-2">
-                                    <span class="text-3xl">📚</span><span class="text-[10px] font-bold text-brand-navy">책장</span>
-                                </div>
-                                <div class="aspect-square rounded-3xl bg-white/85 border border-white shadow-sm flex flex-col items-center justify-center gap-2">
-                                    <span class="text-3xl">☕</span><span class="text-[10px] font-bold text-brand-navy">머그컵</span>
-                                </div>
-                                <div class="aspect-square rounded-3xl bg-white/85 border border-white shadow-sm flex flex-col items-center justify-center gap-2">
-                                    <span class="text-3xl">💡</span><span class="text-[10px] font-bold text-brand-navy">스탠드</span>
-                                </div>
-                                <div class="aspect-square rounded-3xl bg-white/85 border border-white shadow-sm flex flex-col items-center justify-center gap-2">
-                                    <span class="text-3xl">🌿</span><span class="text-[10px] font-bold text-brand-navy">화분</span>
-                                </div>
-                                <div class="aspect-square rounded-3xl bg-white/85 border border-white shadow-sm flex flex-col items-center justify-center gap-2 border-dashed">
-                                    <span class="text-3xl opacity-50">🪑</span><span class="text-[10px] font-bold text-gray-400">새 인연 자리</span>
-                                </div>
-                                <button onclick="document.getElementById('guestbook-modal').classList.remove('hidden')" class="aspect-square rounded-3xl bg-brand-navy text-white shadow-sm flex flex-col items-center justify-center gap-2 hover:bg-brand-navyLight transition-colors">
-                                    <span class="text-3xl">📔</span><span class="text-[10px] font-bold">방명록</span>
-                                </button>
-                            </div>
+            <div class="grid grid-cols-1 xl:grid-cols-5 gap-6">
+                <div class="xl:col-span-4 bg-white rounded-3xl border border-brand-ivoryDark shadow-sm overflow-hidden">
+                    <div class="p-5 border-b border-brand-ivoryDark flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="serif-title text-xl font-bold text-brand-navy">Official Sticker Lounge</h2>
+                            <p id="official-lounge-stage-text" class="text-xs text-gray-500 mt-1">배경, 서가, 액자, 화분, 다과세트, 벽시계, 모아 캐릭터를 배치해보세요.</p>
                         </div>
+                        <div class="text-[11px] text-gray-500 bg-brand-ivory/70 px-3 py-2 rounded-xl border border-brand-ivoryDark">
+                            공모전 시연용: 모든 스티커 획득 완료 상태
+                        </div>
+                    </div>
+
+                    <div class="p-4 sm:p-6 bg-[#FFFDF8]">
+                        <div id="official-lounge-main" class="official-lounge" aria-label="북라운지 꾸미기 화면"></div>
                     </div>
                 </div>
 
-                <div class="lg:col-span-2 space-y-6">
-                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm space-y-4">
-                        <div class="flex items-center justify-between">
-                            <h3 class="serif-title font-bold text-lg text-brand-navy">함께하는 북메이트</h3>
-                            <span class="text-xs font-bold text-brand-sage">6명</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-3">
-                            <div class="text-center"><div class="w-12 h-12 mx-auto rounded-full bg-brand-sageLight flex items-center justify-center font-bold text-brand-sageDark">민</div><p class="text-[10px] mt-1 font-bold text-brand-navy">민지</p></div>
-                            <div class="text-center"><div class="w-12 h-12 mx-auto rounded-full bg-blue-50 flex items-center justify-center font-bold text-blue-700">현</div><p class="text-[10px] mt-1 font-bold text-brand-navy">현우</p></div>
-                            <div class="text-center"><div class="w-12 h-12 mx-auto rounded-full bg-amber-50 flex items-center justify-center font-bold text-amber-700">지</div><p class="text-[10px] mt-1 font-bold text-brand-navy">지은</p></div>
+                <div class="xl:col-span-1 space-y-5">
+                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm space-y-3">
+                        <h3 class="serif-title font-bold text-lg text-brand-navy">가구</h3>
+                        <button class="lounge-option" data-lounge-toggle="shelf" onclick="toggleOfficialSticker('shelf')">📚 서가</button>
+                        <button class="lounge-option" data-lounge-toggle="frame" onclick="toggleOfficialSticker('frame')">🖼️ 액자</button>
+                        <button class="lounge-option" data-lounge-toggle="plant" onclick="toggleOfficialSticker('plant')">🌿 화분</button>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm space-y-3">
+                        <h3 class="serif-title font-bold text-lg text-brand-navy">소품</h3>
+                        <button class="lounge-option" data-lounge-toggle="snack" onclick="toggleOfficialSticker('snack')">🍪 다과 세트</button>
+                        <button class="lounge-option" data-lounge-toggle="clock" onclick="toggleOfficialSticker('clock')">🕒 벽시계</button>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm space-y-3">
+                        <h3 class="serif-title font-bold text-lg text-brand-navy">모아 배치</h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button class="lounge-cat-option" data-lounge-cat="cat1" onclick="setOfficialCat('cat1')">① 흰냥</button>
+                            <button class="lounge-cat-option" data-lounge-cat="cat2" onclick="setOfficialCat('cat2')">② 삼색냥</button>
+                            <button class="lounge-cat-option" data-lounge-cat="cat3" onclick="setOfficialCat('cat3')">③ 샴냥</button>
+                            <button class="lounge-cat-option" data-lounge-cat="cat4" onclick="setOfficialCat('cat4')">④ 치즈냥</button>
                         </div>
                     </div>
 
-                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm space-y-4">
-                        <div class="flex items-center justify-between">
-                            <h3 class="serif-title font-bold text-lg text-brand-navy">북라운지 가이드</h3>
-                            <span class="text-[10px] text-gray-400 font-bold">획득 조건</span>
-                        </div>
-                        <div class="space-y-3 text-xs">
-                            <div class="flex items-center justify-between p-3 rounded-xl bg-brand-ivory border border-brand-ivoryDark"><span>📚 책 1권 완독</span><b class="text-brand-sageDark">책장</b></div>
-                            <div class="flex items-center justify-between p-3 rounded-xl bg-brand-ivory border border-brand-ivoryDark"><span>🤖 AI 1:1 대화 10회</span><b class="text-brand-sageDark">머그컵</b></div>
-                            <div class="flex items-center justify-between p-3 rounded-xl bg-brand-ivory border border-brand-ivoryDark"><span>💬 질문 작성 20개</span><b class="text-brand-sageDark">스탠드</b></div>
-                            <div class="flex items-center justify-between p-3 rounded-xl bg-brand-ivory border border-brand-ivoryDark"><span>👥 온라인 모임 5회</span><b class="text-brand-sageDark">북메이트</b></div>
-                            <div class="flex items-center justify-between p-3 rounded-xl bg-brand-ivory border border-brand-ivoryDark"><span>🏛 소속 도서관 모임 10회</span><b class="text-brand-sageDark">특별 아이템</b></div>
-                        </div>
+                    <div class="bg-brand-ivory p-5 rounded-2xl border border-brand-ivoryDark shadow-sm">
+                        <h3 class="serif-title font-bold text-lg text-brand-navy">현재 상태</h3>
+                        <p id="official-lounge-status" class="text-xs text-gray-600 mt-2 leading-relaxed">저장된 북라운지를 불러오는 중입니다.</p>
                     </div>
                 </div>
             </div>
