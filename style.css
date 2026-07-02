@@ -457,3 +457,51 @@ body {
 button:active, .home-soft-card:active {
     transform: scale(.985);
 }
+
+/* v2.0 discussion UI polish */
+#social-post-submit { word-break: keep-all; }
+#view-realtime-room .break-keep { word-break: keep-all; }
+#view-realtime-room button { word-break: keep-all; }
+@media (max-width: 640px) {
+  #view-realtime-room #social-post-submit { width: 100%; }
+}
+
+/* BOOKMATE 2.0 UI Patch - discussion polish */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.social-feed-tabs { padding-bottom: 2px; }
+.social-feed-tabs button { line-height: 1.2; }
+#social-category-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+#social-category-chips::-webkit-scrollbar { display: none; }
+#social-post-submit { white-space: nowrap; }
+
+/* BOOKMATE 2.0 Guest Gate blurred preview */
+.guest-blur-base {
+    filter: blur(2.5px);
+    opacity: .38;
+    transform: scale(.992);
+    pointer-events: none;
+    user-select: none;
+    transition: filter .18s ease, opacity .18s ease, transform .18s ease;
+}
+#view-guest-gate.guest-gate-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    overflow-y: auto;
+    background: rgba(250, 246, 240, .58);
+    backdrop-filter: blur(1px);
+}
+#view-guest-gate.guest-gate-overlay > div {
+    min-height: 100vh;
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+}
+#view-guest-gate.guest-gate-overlay .max-w-xl {
+    box-shadow: 0 24px 80px rgba(27, 42, 71, .18);
+}
+@media (max-width: 640px) {
+    #view-guest-gate.guest-gate-overlay > div {
+        padding-top: 4.5rem;
+    }
+}

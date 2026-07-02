@@ -1,22 +1,9 @@
 [build]
-  publish = "public"
   command = "npm install"
-
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
+  publish = "."
+  functions = "netlify/functions"
 
 [[redirects]]
   from = "/api/chat"
   to = "/.netlify/functions/chat"
-  status = 200
-
-[[redirects]]
-  from = "/api/share"
-  to = "/.netlify/functions/share"
-  status = 200
-
-[[redirects]]
-  from = "/share/:id"
-  to = "/.netlify/functions/share?id=:id"
   status = 200

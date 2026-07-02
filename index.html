@@ -57,7 +57,7 @@
                 <!-- Desktop Navigation Items -->
                 <div class="hidden md:flex items-center space-x-8">
                     <button onclick="navigate('realtime-room')" class="nav-link text-sm font-semibold hover:text-brand-sage transition-colors text-brand-navy">토론방</button>
-                    <button onclick="navigate('ai-chat')" class="nav-link text-sm font-semibold hover:text-brand-sage transition-colors text-brand-navy">AI 1:1 토론</button>
+                    <button onclick="navigate('ai-chat')" class="nav-link text-sm font-semibold hover:text-brand-sage transition-colors text-brand-navy">AI 대화</button>
                     <button onclick="navigate('search-results')" class="nav-link text-sm font-semibold hover:text-brand-sage transition-colors text-brand-navy">독서모임</button>
                     <button onclick="navigate('archive')" class="nav-link text-sm font-semibold hover:text-brand-sage transition-colors text-brand-navy">아카이브</button>
                     <button onclick="navigate('mypage')" class="nav-link text-sm font-semibold hover:text-brand-sage transition-colors text-brand-navy">내 서재</button>
@@ -67,7 +67,7 @@
                 <!-- Right Utility Actions -->
                 <div class="flex items-center space-x-3">
                     <!-- Top Pulsing LIVE badge -->
-                    <div onclick="enterMeetingRoom('달러구트 꿈 백화점')" class="flex items-center gap-1.5 bg-red-50 text-red-600 border border-red-100 px-3 py-1.5 rounded-full text-xs font-bold cursor-pointer animate-pulse mr-1">
+                    <div id="top-live-meeting-badge" onclick="enterMeetingRoom('달러구트 꿈 백화점')" class="hidden flex items-center gap-1.5 bg-red-50 text-red-600 border border-red-100 px-3 py-1.5 rounded-full text-xs font-bold cursor-pointer animate-pulse mr-1">
                         <span class="w-2 h-2 rounded-full bg-red-600 block"></span>
                         <span class="hidden sm:inline">오늘 20:00 모임</span>
                     </div>
@@ -78,6 +78,9 @@
                     </button>
                     <button onclick="openSettingsModal()" class="p-2 rounded-full hover:bg-brand-ivory transition-colors text-gray-500 hover:text-brand-navy" title="설정">
                         <i data-lucide="settings" class="w-5 h-5"></i>
+                    </button>
+                    <button id="auth-header-action" onclick="handleAuthHeaderClick()" class="p-2 rounded-full hover:bg-brand-ivory transition-colors text-gray-500 hover:text-brand-navy" title="로그인">
+                        <i id="auth-header-icon" data-lucide="log-in" class="w-5 h-5"></i>
                     </button>
                     
                     <!-- Display Name Badge with Avatar -->
@@ -146,20 +149,20 @@
                             <div class="flex items-start gap-4">
                                 <div id="home-brief-avatar" class="shrink-0"></div>
                                 <div>
-                                    <span class="text-[10px] font-bold tracking-wider text-brand-sage uppercase">오늘의 북메이트</span>
-                                    <h2 id="home-brief-title" class="serif-title text-xl sm:text-2xl font-bold text-brand-navy mt-1">오늘도 북메이트와 함께할 준비 되셨나요?</h2>
+                                    <span id="home-brief-eyebrow" class="text-[10px] font-bold tracking-wider text-brand-sage uppercase">오늘의 북메이트</span>
+                                    <h2 id="home-brief-title" class="serif-title text-lg sm:text-2xl font-bold text-brand-navy mt-1 whitespace-nowrap leading-tight">오늘도 북메이트와 함께할 준비 되셨나요?</h2>
                                     <p id="home-brief-subtitle" class="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed">오늘은 2개의 독서모임이 열리고, 북메이트 3명이 새 글을 남겼어요.</p>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-3 gap-2 min-w-[220px]">
+                            <div id="home-brief-stats" class="grid grid-cols-3 gap-2 min-w-[220px]">
                                 <div class="rounded-2xl bg-brand-ivory/70 border border-brand-ivoryDark p-3 text-center">
-                                    <b class="block text-lg text-brand-navy">7일</b><span class="text-[10px] text-gray-500 font-bold">독서 연속</span>
+                                    <b id="home-stat-1-value" class="block text-lg text-brand-navy">7일</b><span id="home-stat-1-label" class="text-[10px] text-gray-500 font-bold">독서 연속</span>
                                 </div>
                                 <div class="rounded-2xl bg-brand-sageLight/70 border border-brand-sage/10 p-3 text-center">
-                                    <b class="block text-lg text-brand-navy">2개</b><span class="text-[10px] text-gray-500 font-bold">오늘 모임</span>
+                                    <b id="home-stat-2-value" class="block text-lg text-brand-navy">2개</b><span id="home-stat-2-label" class="text-[10px] text-gray-500 font-bold">오늘 모임</span>
                                 </div>
                                 <div class="rounded-2xl bg-amber-50 border border-amber-100 p-3 text-center">
-                                    <b class="block text-lg text-brand-navy">3명</b><span class="text-[10px] text-gray-500 font-bold">새 소식</span>
+                                    <b id="home-stat-3-value" class="block text-lg text-brand-navy">3명</b><span id="home-stat-3-label" class="text-[10px] text-gray-500 font-bold">새 소식</span>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +170,7 @@
                 </div>
 
                 <!-- BOOKMATE v1.6: 나의 오늘 독서 일정 -->
-                <div class="max-w-4xl mx-auto mt-8 text-left">
+                <div id="home-reading-schedule-card" class="max-w-4xl mx-auto mt-8 text-left hidden">
                     <div class="bg-white rounded-3xl border border-brand-ivoryDark shadow-sm overflow-hidden">
                         <div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-5">
                             <div class="flex items-start gap-4">
@@ -599,7 +602,7 @@
             </div>
         </section>
 
-        <!-- VIEW: AI 1:1 Discussion -->
+        <!-- VIEW: AI Reading Partner -->
         <section id="view-ai-chat" class="view-section hidden animate-fadeIn">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 h-[calc(100vh-13rem)] min-h-[550px]">
                 <!-- Chat Left Sidebar -->
@@ -607,41 +610,47 @@
                     <div class="space-y-6 overflow-y-auto pr-1">
                         <div class="space-y-3">
                             <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-gray-400">AI 독서 파트너</span>
+                                <button onclick="openNewAIChatModal()" class="text-[10px] text-brand-sage font-bold hover:underline bg-brand-sageLight/50 px-2 py-1 rounded">+ 새 대화</button>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-brand-ivory border border-brand-ivoryDark text-xs leading-relaxed text-brand-navy">
+                                <b class="block mb-1">AI 모아</b>
+                                <p class="text-gray-500">책을 읽는 모든 순간,<br>함께 생각하고 대화하는 AI입니다.</p>
+                            </div>
+                            <div id="ai-mode-selector" class="hidden"></div>
+                        </div>
+                        <div class="space-y-3 pt-4 border-t border-brand-ivoryDark">
+                            <div class="flex justify-between items-center">
                                 <span class="text-xs font-bold text-gray-400">지난 대화 기록</span>
-                                <button onclick="openNewAIChatModal()" class="text-[10px] text-brand-sage font-bold hover:underline bg-brand-sageLight/50 px-2 py-1 rounded">+ 새 대화 열기</button>
+                                <button onclick="saveCurrentAIChat()" class="text-[10px] text-brand-navy font-bold hover:bg-brand-ivory px-2 py-1 rounded">저장</button>
                             </div>
-                            <div class="space-y-1">
-                                <button onclick="openNewAIChatModal()" class="w-full text-left p-2.5 rounded-lg text-xs font-medium bg-brand-sageLight text-brand-sageDark flex items-center gap-2 transition-colors">
-                                    <i data-lucide="message-square" class="w-3.5 h-3.5"></i> 현재 진행 중인 대화 <span class="ml-auto text-[10px] text-brand-sage">오늘</span>
-                                </button>
-                                <button class="w-full text-left p-2.5 rounded-lg text-xs font-medium text-gray-500 hover:bg-brand-ivory transition-colors flex items-center gap-2">
-                                    <i data-lucide="message-square" class="w-3.5 h-3.5"></i> 사피엔스 · 인지혁명 <span class="ml-auto text-[10px] text-gray-400">어제</span>
-                                </button>
-                                <button class="w-full text-left p-2.5 rounded-lg text-xs font-medium text-gray-500 hover:bg-brand-ivory transition-colors flex items-center gap-2">
-                                    <i data-lucide="message-square" class="w-3.5 h-3.5"></i> 달러구트 꿈 백화점 · 꿈과 위로 <span class="ml-auto text-[10px] text-gray-400">3일 전</span>
-                                </button>
-                                <button class="w-full text-left p-2.5 rounded-lg text-xs font-medium text-gray-500 hover:bg-brand-ivory transition-colors flex items-center gap-2">
-                                    <i data-lucide="message-square" class="w-3.5 h-3.5"></i> 아몬드 · 감정의 이해 <span class="ml-auto text-[10px] text-gray-400">1주 전</span>
-                                </button>
-                                <button class="w-full text-left p-2.5 rounded-lg text-xs font-medium text-gray-500 hover:bg-brand-ivory transition-colors flex items-center gap-2">
-                                    <i data-lucide="message-square" class="w-3.5 h-3.5"></i> 데미안 · 자아 탐구 <span class="ml-auto text-[10px] text-gray-400">2주 전</span>
-                                </button>
-                            </div>
+                            <div id="ai-history-list" class="space-y-1"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Chat Dialog Frame -->
-                <div class="lg:col-span-2 bg-white rounded-2xl border border-brand-ivoryDark flex flex-col justify-between overflow-hidden">
+                <div class="lg:col-span-3 bg-white rounded-2xl border border-brand-ivoryDark flex flex-col justify-between overflow-hidden">
                     <div class="bg-brand-ivory/80 px-5 py-4 border-b border-brand-ivoryDark flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full overflow-hidden bg-brand-ivory border border-brand-ivoryDark"><img src="assets/profile-moa/ai.png" alt="AI 프로필" class="w-full h-full object-cover"></div>
+                            <div id="ai-header-avatar-wrap" class="w-9 h-9 rounded-full overflow-hidden bg-brand-ivory border border-brand-ivoryDark transition-all duration-300"><img id="ai-header-avatar-img" src="assets/ai-moa/ai-moa.png" alt="AI 모아 프로필" class="w-full h-full object-cover transition-opacity duration-300"></div>
                             <div>
-                                <h3 class="font-bold text-xs text-brand-navy">AI 독서 퍼실리테이터</h3>
-                                <p class="text-[10px] text-brand-sage font-semibold" id="ai-chat-header-book">『달러구트 꿈 백화점』을 함께 깊이 읽는 중</p>
+                                <h3 class="font-bold text-xs text-brand-navy flex items-center gap-1.5">AI 모아
+                                    <span class="relative group inline-flex items-center justify-center w-4 h-4 rounded-full bg-white border border-brand-sage/30 text-brand-sage text-[10px] cursor-help">?
+                                        <span class="absolute left-1/2 -translate-x-1/2 top-6 hidden group-hover:block z-50 w-72 rounded-xl bg-brand-navy text-white text-[10px] leading-relaxed p-3 shadow-xl font-normal">
+                                            "줄거리가 기억나지 않나요?"<br>"독서모임을 준비하고 계신가요?"<br>"서평을 쓰고 싶으신가요?"<br>"다음 책을 추천받고 싶으신가요?"<br><br>무엇이든 편하게 물어보세요.<br>AI 독서 파트너 모아가 함께합니다.
+                                        </span>
+                                    </span>
+                                </h3>
+                                <p class="text-[10px] text-brand-sage font-semibold" id="ai-chat-header-book">AI 독서 파트너</p>
+                                <p class="text-[10px] text-gray-400 font-medium mt-0.5" id="ai-chat-status-line">책을 읽는 모든 순간, 함께 생각하고 대화하는 AI입니다.</p>
                             </div>
                         </div>
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-800">대화 진행 중</span>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="shareAIChat('summary')" class="px-2 py-1 rounded-lg bg-white border border-brand-ivoryDark text-[10px] font-bold text-brand-navy hover:bg-brand-ivory">요약 공유</button>
+                            <button onclick="shareAIChat('full')" class="px-2 py-1 rounded-lg bg-white border border-brand-ivoryDark text-[10px] font-bold text-brand-navy hover:bg-brand-ivory">전체 공유</button>
+                            <span id="ai-current-mode-badge" class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-800">AI 독서 파트너</span>
+                        </div>
                     </div>
 
                     <!-- AI Chat Scroller -->
@@ -650,12 +659,21 @@
                     </div>
 
                     <div id="ai-typing-indicator" class="hidden px-5 py-2 text-xs text-brand-sage animate-pulse font-medium flex items-center gap-1">
-                        <i data-lucide="loader" class="w-3.5 h-3.5 animate-spin"></i> AI 퍼실리테이터가 사유를 더 깊이 확장할 질문을 고민하는 중...
+                        <i data-lucide="loader" class="w-3.5 h-3.5 animate-spin"></i> AI 모아가 대화 맥락을 살펴보는 중...
                     </div>
 
                     <div class="p-4 border-t border-brand-ivoryDark bg-white space-y-2">
                         <div class="flex items-center gap-2">
-                            <input id="ai-chat-input" type="text" placeholder="생각이 정리되면 천천히 적어보세요..." onkeypress="handleAIChatKeyPress(event)"
+                            <div id="ai-recommendation-chips" class="flex flex-wrap gap-1.5 pb-1">
+                            <button onclick="sendAIChip('줄거리를 500자 이내로 요약해줘')" class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy hover:bg-brand-sageLight">#줄거리요약</button>
+                            <button onclick="sendAIChip('등장인물을 정리해줘')" class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy hover:bg-brand-sageLight">#등장인물</button>
+                            <button onclick="sendAIChip('핵심 주제를 알려줘')" class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy hover:bg-brand-sageLight">#핵심주제</button>
+                            <button onclick="sendAIChip('토론 질문을 만들어줘')" class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy hover:bg-brand-sageLight">#토론질문</button>
+                            <button onclick="sendAIChip('독서모임 준비를 도와줘')" class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy hover:bg-brand-sageLight">#독서모임</button>
+                            <button onclick="sendAIChip('서평 작성을 도와줘')" class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy hover:bg-brand-sageLight">#서평작성</button>
+                            <button onclick="sendAIChip('비슷하게 읽을 책을 추천해줘')" class="px-3 py-1.5 rounded-full bg-brand-ivory border border-brand-ivoryDark text-[10px] font-bold text-brand-navy hover:bg-brand-sageLight">#책추천</button>
+                        </div>
+                        <input id="ai-chat-input" type="text" placeholder="책 제목이나 궁금한 점을 편하게 적어보세요." onkeypress="handleAIChatKeyPress(event)"
                                    class="flex-1 px-4 py-3 bg-brand-ivory/50 border border-brand-ivoryDark rounded-xl focus:border-brand-sage outline-none text-xs">
                             <button onclick="sendAIChatMessage()" class="bg-brand-navy hover:bg-brand-navyLight text-white px-5 py-3 rounded-xl font-bold text-xs transition-colors shadow whitespace-nowrap">
                                 보내기
@@ -664,8 +682,8 @@
                     </div>
                 </div>
 
-                <!-- Chat Right Sidebar -->
-                <div class="lg:col-span-1 space-y-6 flex flex-col justify-between">
+                <!-- Chat Right Sidebar removed in AI Reading Partner UX -->
+                <div class="hidden">
                     <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark space-y-4 flex-grow flex flex-col relative overflow-hidden shadow-sm">
                         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-sageLight via-brand-sage to-brand-sageDark animate-pulse"></div>
                         <div class="flex items-center justify-between border-b border-brand-ivory pb-2">
@@ -709,21 +727,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark space-y-4 shadow-sm">
-                        <span class="text-xs font-bold text-brand-navy tracking-wider uppercase block">같은 책을 사유 중인 독자</span>
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center justify-center">사</div>
-                                    <div>
-                                        <h4 class="text-xs font-bold text-brand-navy">사유올빼미</h4>
-                                        <p class="text-[9px] text-brand-sage">사유 합치도 94%</p>
-                                    </div>
-                                </div>
-                                <button onclick="sayHelloToReader('사유올빼미')" class="px-2.5 py-1 bg-brand-sageLight hover:bg-brand-sage/20 text-brand-sageDark rounded-md text-[10px] font-bold transition-colors">인사</button>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- 같은 책을 사유 중인 독자 추천 영역은 실제 매칭 구현 전까지 제거 -->
                 </div>
             </div>
         </section>
@@ -731,46 +735,76 @@
         <!-- VIEW: Realtime Social Lounge -->
         <section id="view-realtime-room" class="view-section hidden animate-fadeIn">
             <div class="border-b border-brand-ivoryDark pb-6 mb-8">
-                <span class="text-xs font-bold text-brand-sage tracking-wider uppercase">자유게시판 & 토론 라운지</span>
-                <h1 class="serif-title text-3xl font-bold text-brand-navy mt-1">책에 관한 모든 이야기를 자유롭게 나눠보세요</h1>
-                <p class="text-gray-500 text-xs mt-2">감상, 추천, 질문 등 어떤 이야기든 환영합니다. 다른 독자들과 댓글로 소통해 보세요.</p>
+                <span class="text-xs font-bold text-brand-sage tracking-wider uppercase">BOOK DISCUSSION</span>
+                <h1 class="serif-title text-3xl font-bold text-brand-navy mt-1">같은 책을 읽은 사람들과 이야기를 이어보세요</h1>
+                <p class="text-gray-500 text-xs mt-2">토론방은 게시판이 아니라 책을 발견하는 공간입니다. 책을 검색하고, 감상·추천·질문을 책 중심으로 나눠보세요.</p>
+                <div class="mt-5 bg-white rounded-2xl border border-brand-ivoryDark p-3 shadow-sm flex items-center gap-3 relative">
+                    <i data-lucide="search" class="w-4 h-4 text-brand-sage ml-1"></i>
+                    <input id="discussion-global-book-search" type="text" placeholder="토론을 보고 싶은 책을 검색해보세요. 예: 달러구트, 채식주의자, 사피엔스" oninput="searchDiscussionBooks(this.value)" class="flex-1 bg-transparent outline-none text-sm text-brand-navy">
+                    <button onclick="clearBookDiscussionFilter()" class="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-navy text-white text-[11px] font-bold hover:bg-brand-navyLight shadow-sm transition-colors whitespace-nowrap"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> 전체보기</button>
+                    <div id="discussion-book-search-results" class="hidden absolute left-0 right-0 top-[58px] bg-white border border-brand-ivoryDark rounded-2xl shadow-xl z-30 p-2 max-h-80 overflow-y-auto"></div>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Center Feed Areas -->
                 <div class="lg:col-span-2 space-y-6">
-                    <div class="bg-white p-6 rounded-2xl border border-brand-ivoryDark space-y-4">
-                        <span class="text-xs font-bold text-brand-navy flex items-center gap-1.5">
-                            <i data-lucide="edit" class="w-4 h-4 text-brand-sage"></i> 지금 머릿속에 가득 찬 생각을 나눠보세요
-                        </span>
+                    <div id="social-composer-card" class="bg-white p-6 rounded-2xl border border-brand-ivoryDark space-y-4">
+                        <div id="guest-social-notice" class="hidden mb-3 p-4 rounded-2xl bg-brand-ivory/70 border border-brand-ivoryDark text-center">
+                            <p class="text-sm font-bold text-brand-navy">BOOKMATE가 되어, 함께 책 이야기를 나눠요.</p>
+                            <p class="text-xs text-gray-500 mt-1">로그인 후 감상, 추천, 질문을 자유롭게 남길 수 있습니다.</p>
+                            <button onclick="openAuthPage('login')" class="mt-3 px-4 py-2 rounded-xl bg-brand-navy text-white text-xs font-bold hover:bg-brand-navyLight transition-colors">로그인 / 회원가입</button>
+                        </div>
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                            <span class="text-xs font-bold text-brand-navy flex items-center gap-1.5">
+                                <i data-lucide="edit" class="w-4 h-4 text-brand-sage"></i> 지금 머릿속에 가득 찬 생각을 나눠보세요
+                            </span>
+                            <div class="flex items-center justify-end gap-2 flex-wrap">
+                                <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-brand-navy bg-brand-sageLight/70 px-3 py-1.5 rounded-full whitespace-nowrap">
+                                    <span class="w-2 h-2 rounded-full bg-brand-sage animate-pulse"></span> 지금 128명이 함께 이야기 중
+                                </span>
+                                <select id="social-post-scope" class="px-3 py-1.5 bg-white border border-brand-ivoryDark rounded-full text-[11px] font-bold text-brand-navy outline-none focus:border-brand-sage" title="게시글 공개 범위">
+                                    <option value="전체">🌎 전체 BOOKMATE</option>
+                                    <option value="내 도서관">🏛 내 도서관</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="space-y-3">
                             <textarea id="social-post-text" rows="3" placeholder="예: 무기력한 날, 달러구트의 '베이커가 만개한 귤나무 꿈'을 대신 사서 푹 자고 싶네요..."
                                       class="w-full p-4 bg-brand-ivory/40 rounded-xl border border-brand-ivoryDark text-xs leading-relaxed focus:border-brand-sage outline-none"></textarea>
-                            <div class="flex flex-col sm:flex-row gap-3 sm:items-center justify-between">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <input id="social-post-book" type="text" placeholder="관련 책 (예: 달러구트 꿈 백화점)"
-                                           class="px-3 py-1.5 bg-brand-ivory/80 border border-brand-ivoryDark rounded-lg text-xs outline-none focus:border-brand-sage">
-                                    <div class="flex gap-1" id="social-category-chips">
-                                        <button onclick="setSocialCategory('감상')" id="chip-cat-감상" class="cat-chip px-2.5 py-1.5 bg-brand-navy text-white text-[10px] font-bold rounded-lg">감상</button>
-                                        <button onclick="setSocialCategory('추천')" id="chip-cat-추천" class="cat-chip px-2.5 py-1.5 bg-brand-ivory text-brand-navy text-[10px] font-bold rounded-lg">추천</button>
-                                        <button onclick="setSocialCategory('질문')" id="chip-cat-질문" class="cat-chip px-2.5 py-1.5 bg-brand-ivory text-brand-navy text-[10px] font-bold rounded-lg">질문</button>
+                            <div class="flex flex-col xl:flex-row gap-3 xl:items-end justify-between">
+                                <div class="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                                    <div class="relative min-w-[280px] flex-1">
+                                        <input id="social-post-book" type="text" placeholder="관련 책 검색 후 선택" oninput="searchSocialPostBooks(this.value)"
+                                               class="w-full px-3 py-2 bg-brand-ivory/80 border border-brand-ivoryDark rounded-xl text-xs outline-none focus:border-brand-sage">
+                                        <div id="social-post-book-results" class="hidden absolute left-0 right-0 top-9 bg-white border border-brand-ivoryDark rounded-xl shadow-xl z-40 p-1.5 max-h-64 overflow-y-auto"></div>
+                                        <input id="social-post-book-author" type="hidden"><input id="social-post-book-cover" type="hidden"><input id="social-post-book-isbn" type="hidden">
                                     </div>
+                                    <div class="flex flex-wrap gap-1" id="social-category-chips">
+                                        <button onclick="setSocialCategory('감상')" id="chip-cat-감상" class="cat-chip whitespace-nowrap px-3 py-1.5 bg-brand-navy text-white text-[10px] font-bold rounded-lg">📖 감상</button>
+                                        <button onclick="setSocialCategory('추천')" id="chip-cat-추천" class="cat-chip whitespace-nowrap px-3 py-1.5 bg-brand-ivory text-brand-navy text-[10px] font-bold rounded-lg">💡 추천</button>
+                                        <button onclick="setSocialCategory('질문')" id="chip-cat-질문" class="cat-chip whitespace-nowrap px-3 py-1.5 bg-brand-ivory text-brand-navy text-[10px] font-bold rounded-lg">❓ 질문</button>
+                                        <button onclick="setSocialCategory('함께 읽어요')" id="chip-cat-함께 읽어요" class="cat-chip whitespace-nowrap px-3 py-1.5 bg-brand-ivory text-brand-navy text-[10px] font-bold rounded-lg">👥 함께 읽어요</button>
+                                    </div>
+
                                 </div>
-                                <button onclick="publishSocialPost()" class="px-5 py-2.5 bg-brand-navy hover:bg-brand-navyLight text-white rounded-xl text-xs font-bold transition-all shadow">
+                                <button id="social-post-submit" onclick="publishSocialPost()" class="shrink-0 min-w-[88px] px-5 py-2.5 bg-brand-navy hover:bg-brand-navyLight text-white rounded-xl text-xs font-bold transition-all shadow whitespace-nowrap">
                                     올리기
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between border-b border-brand-ivoryDark pb-3">
-                        <div class="flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-brand-sage animate-pulse"></span>
-                            <span class="text-xs font-bold text-brand-navy">지금 128명의 독자가 함께 사유 중</span>
-                        </div>
-                        <div class="flex gap-1.5 text-xs font-semibold">
-                            <button onclick="filterSocialFeed('전체')" class="px-3 py-1 text-brand-sageDark bg-brand-sageLight rounded-lg">전체</button>
-                            <button onclick="filterSocialFeed('감상')" class="px-3 py-1 text-gray-500 hover:text-brand-navy transition-colors">감상</button>
+                    <div class="border-b border-brand-ivoryDark pb-3">
+                        <div class="flex gap-1.5 text-xs font-semibold overflow-x-auto whitespace-nowrap no-scrollbar social-feed-tabs" id="social-feed-tabs">
+                            <button onclick="filterSocialFeed('전체')" class="shrink-0 px-3 py-1.5 text-brand-sageDark bg-brand-sageLight rounded-full whitespace-nowrap">📚 전체</button>
+                            <button onclick="filterSocialFeed('인기')" class="shrink-0 px-3 py-1.5 text-gray-500 hover:text-brand-navy hover:bg-brand-ivory rounded-full transition-colors whitespace-nowrap">🔥 인기</button>
+                            <button onclick="filterSocialFeed('최신')" class="shrink-0 px-3 py-1.5 text-gray-500 hover:text-brand-navy hover:bg-brand-ivory rounded-full transition-colors whitespace-nowrap">🆕 최신</button>
+                            <button onclick="filterSocialFeed('감상')" class="shrink-0 px-3 py-1.5 text-gray-500 hover:text-brand-navy hover:bg-brand-ivory rounded-full transition-colors whitespace-nowrap">📖 감상</button>
+                            <button onclick="filterSocialFeed('추천')" class="shrink-0 px-3 py-1.5 text-gray-500 hover:text-brand-navy hover:bg-brand-ivory rounded-full transition-colors whitespace-nowrap">💡 추천</button>
+                            <button onclick="filterSocialFeed('질문')" class="shrink-0 px-3 py-1.5 text-gray-500 hover:text-brand-navy hover:bg-brand-ivory rounded-full transition-colors whitespace-nowrap">❓ 질문</button>
+                            <button onclick="filterSocialFeed('함께 읽어요')" class="shrink-0 px-3 py-1.5 text-gray-500 hover:text-brand-navy hover:bg-brand-ivory rounded-full transition-colors whitespace-nowrap">👥 함께 읽어요</button>
+                            <button onclick="filterSocialFeed('내 도서관')" class="shrink-0 px-3 py-1.5 text-gray-500 hover:text-brand-navy hover:bg-brand-ivory rounded-full transition-colors whitespace-nowrap">🏛 내 도서관</button>
                         </div>
                     </div>
 
@@ -781,13 +815,20 @@
 
                 <!-- Right Side Widgets -->
                 <div class="space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark space-y-4 shadow-sm" id="hot-discussion-book-card">
+                        <!-- Dynamically filled by JS -->
+                    </div>
                     <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark space-y-4 shadow-sm">
                         <span class="text-xs font-bold text-brand-navy tracking-wider uppercase block border-b border-brand-ivory pb-2 flex items-center gap-1.5">
-                            <i data-lucide="trending-up" class="w-4 h-4 text-brand-sage"></i> 실시간 추천 도서 랭킹
+                            <i data-lucide="trending-up" class="w-4 h-4 text-brand-sage"></i> 이번 주 인기 도서
                         </span>
                         <div class="space-y-3" id="realtime-recommendation-list">
                             <!-- Dynamically filled by JS -->
                         </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-brand-ivoryDark shadow-sm">
+                        <span class="text-xs font-bold text-brand-navy tracking-wider uppercase block border-b border-brand-ivory pb-2">인기 태그</span>
+                        <div id="discussion-tag-list" class="flex flex-wrap gap-2 mt-4"></div>
                     </div>
                 </div>
             </div>
@@ -987,9 +1028,10 @@
                         <button type="button" onclick="openProfileCard()" class="rounded-full relative z-10 focus:outline-none focus:ring-2 focus:ring-brand-sage" aria-label="프로필 크게 보기"><div class="w-20 h-20 bg-brand-sage rounded-full flex items-center justify-center text-white text-2xl font-bold font-serif shadow-inner border-4 border-white" id="profile-avatar-initial">달</div></button>
                         <div class="relative z-10 w-full">
                             <h2 class="font-bold text-xl text-brand-navy" id="profile-nickname">달빛독서가</h2>
-                            <div class="mt-1 flex items-center justify-center gap-1.5">
+                            <div class="mt-1 flex items-center justify-center gap-1.5 flex-wrap">
                                 <span class="px-2 py-0.5 bg-brand-ivoryDark text-brand-navy rounded text-[10px] font-bold" id="mypage-library-name">익산시립도서관</span>
                                 <span class="px-2 py-0.5 bg-brand-sageLight text-brand-sageDark rounded text-[10px] font-bold">인증회원</span>
+                                <span class="px-2 py-0.5 bg-white border border-brand-sageLight text-brand-sageDark rounded text-[10px] font-bold hidden" id="mypage-reading-type-badge">🌿 감성 탐험가</span>
                             </div>
                         </div>
                         <div class="w-full pt-4 border-t border-brand-ivory flex justify-around text-center mt-2">
@@ -1003,7 +1045,7 @@
                             </div>
                             <div>
                                 <span class="block text-[10px] text-gray-400 font-bold uppercase tracking-wide">남긴 사유</span>
-                                <span class="block text-lg font-bold text-brand-navy font-serif">1,284</span>
+                                <span class="block text-lg font-bold text-brand-navy font-serif" id="my-chat-count-val">1,284</span>
                             </div>
                         </div>
                         <button onclick="openSettingsModal()" class="w-full py-2.5 bg-brand-ivory hover:bg-brand-ivoryDark text-brand-navy text-xs font-bold rounded-xl transition-colors mt-2">프로필 편집</button>
@@ -1351,6 +1393,27 @@
             </div>
         </section>
 
+
+        <!-- VIEW: Guest Gate (게스트 안내) -->
+        <section id="view-guest-gate" class="view-section hidden animate-fadeIn">
+            <div class="min-h-[58vh] flex items-center justify-center px-4">
+                <div class="max-w-xl w-full bg-white rounded-[2rem] border border-brand-ivoryDark shadow-sm p-8 sm:p-10 text-center relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-brand-sageLight/60"></div>
+                    <div class="absolute -left-12 -bottom-12 w-44 h-44 rounded-full bg-brand-ivory/80"></div>
+                    <div class="relative z-10">
+                        <div id="guest-gate-icon" class="w-16 h-16 rounded-2xl bg-brand-ivory flex items-center justify-center mx-auto text-3xl mb-5">📚</div>
+                        <h1 id="guest-gate-title" class="serif-title text-2xl sm:text-3xl font-bold text-brand-navy leading-snug">BOOKMATE가 되어 기록을 채워보세요.</h1>
+                        <p id="guest-gate-desc" class="text-sm text-gray-500 leading-relaxed mt-4 whitespace-pre-line">독서기록, AI 대화, 감상, 필사까지\n나만의 독서 아카이브를 만들어갈 수 있습니다.</p>
+                        <div class="flex justify-center gap-3 mt-7">
+                            <button onclick="openAuthPage('login')" class="px-6 py-3 rounded-xl bg-brand-navy text-white text-sm font-bold hover:bg-brand-navyLight transition-colors shadow-sm">로그인</button>
+                            <button onclick="openAuthPage('signup')" class="px-6 py-3 rounded-xl bg-white border border-brand-ivoryDark text-brand-navy text-sm font-bold hover:bg-brand-ivory transition-colors">회원가입</button>
+                        </div>
+                        <button onclick="returnFromGuestGate()" class="mt-4 px-4 py-2 rounded-xl text-xs font-bold text-gray-500 hover:text-brand-navy hover:bg-brand-ivory transition-colors">← 되돌아가기</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- SETTINGS MODAL -->
@@ -1537,6 +1600,39 @@
     </div>
 
     <!-- NEW AI CHAT MODAL -->
+
+    <!-- BOOKMATE 2.0: First Step Mission Modal -->
+    <div id="first-mission-modal" class="fixed inset-0 z-[85] hidden bg-brand-navy/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-[#FFFDF8] w-full max-w-2xl rounded-[2rem] shadow-2xl border border-brand-ivoryDark overflow-hidden animate-fadeIn">
+            <div class="p-6 sm:p-8 bg-gradient-to-br from-brand-ivory to-white border-b border-brand-ivoryDark">
+                <div class="flex items-start gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-sageLight flex items-center justify-center text-3xl shrink-0">🌱</div>
+                    <div>
+                        <p class="text-xs font-bold text-brand-sage tracking-wider uppercase">FIRST STEP MISSION</p>
+                        <h2 class="serif-title text-2xl font-bold text-brand-navy mt-1">BOOKMATE에 오신 것을 환영합니다!</h2>
+                        <p id="first-mission-welcome" class="text-sm text-gray-500 leading-relaxed mt-2">이제 책을 읽고, 생각을 나누고, 나만의 독서 이야기를 만들어가 보세요.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 sm:p-8 space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                    <button onclick="completeFirstMission('firstBook')" class="first-mission-btn text-left p-4 rounded-2xl bg-white border border-brand-ivoryDark hover:border-brand-sage transition-colors" data-mission="firstBook"><b class="block text-brand-navy">📚 첫 책 등록하기</b><span class="text-xs text-gray-500">보상: 책장</span></button>
+                    <button onclick="completeFirstMission('firstAI')" class="first-mission-btn text-left p-4 rounded-2xl bg-white border border-brand-ivoryDark hover:border-brand-sage transition-colors" data-mission="firstAI"><b class="block text-brand-navy">🤖 AI 모아와 첫 대화</b><span class="text-xs text-gray-500">보상: 말풍선</span></button>
+                    <button onclick="completeFirstMission('firstReview')" class="first-mission-btn text-left p-4 rounded-2xl bg-white border border-brand-ivoryDark hover:border-brand-sage transition-colors" data-mission="firstReview"><b class="block text-brand-navy">💬 첫 감상 작성</b><span class="text-xs text-gray-500">보상: 액자</span></button>
+                    <button onclick="completeFirstMission('firstBookmate')" class="first-mission-btn text-left p-4 rounded-2xl bg-white border border-brand-ivoryDark hover:border-brand-sage transition-colors" data-mission="firstBookmate"><b class="block text-brand-navy">🤝 첫 북메이트 만들기</b><span class="text-xs text-gray-500">보상: 화분</span></button>
+                    <button onclick="completeFirstMission('firstGathering')" class="first-mission-btn text-left p-4 rounded-2xl bg-white border border-brand-ivoryDark hover:border-brand-sage transition-colors sm:col-span-2" data-mission="firstGathering"><b class="block text-brand-navy">☕ 첫 독서모임 참여하기</b><span class="text-xs text-gray-500">보상: 다과세트</span></button>
+                </div>
+                <div class="rounded-2xl bg-brand-ivory/70 border border-brand-ivoryDark p-4 text-xs text-gray-600 leading-relaxed">
+                    미션을 완료하면 북라운지 아이템과 업적이 차곡차곡 채워집니다.
+                </div>
+                <div class="flex justify-end gap-3 pt-2">
+                    <button onclick="closeFirstMissionModal()" class="px-5 py-2.5 rounded-xl border border-brand-ivoryDark bg-white text-brand-navy text-xs font-bold hover:bg-brand-ivory">나중에 보기</button>
+                    <button onclick="closeFirstMissionModal(); navigate('mypage')" class="px-5 py-2.5 rounded-xl bg-brand-navy text-white text-xs font-bold hover:bg-brand-navyLight">BOOKMATE 시작하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="new-ai-chat-modal" class="fixed inset-0 z-50 bg-brand-navy/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl border border-brand-ivoryDark w-full max-w-md overflow-hidden shadow-2xl">
             <div class="bg-brand-ivory p-5 border-b border-brand-ivoryDark flex justify-between items-center">
@@ -1549,15 +1645,24 @@
             </div>
             <div class="p-6 space-y-4">
                 <p class="text-xs text-gray-500 leading-relaxed">
-                    AI 퍼실리테이터와 깊게 사유하고 싶은 책의 제목을 입력해주세요. <br>어떤 책이든 질문을 통해 당신만의 통찰을 이끌어 드립니다.
+                    처음 대화를 시작할 AI를 선택해주세요. 책은 지금 정하지 않아도 괜찮고, 대화 중에 자연스럽게 정할 수 있습니다.
                 </p>
                 <div class="space-y-2">
+                    <label class="block text-xs font-bold text-brand-navy">대화 모드</label>
+                    <select id="new-ai-chat-mode" class="w-full px-4 py-3 bg-brand-ivory/50 border border-brand-ivoryDark rounded-xl focus:border-brand-sage outline-none text-sm font-semibold">
+                        <option value="debate">독서토론 AI</option>
+                        <option value="organize">생각정리 AI</option>
+                        <option value="coaching">독서모임 코칭 AI</option>
+                        <option value="curator">큐레이터 AI</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
                     <div class="flex items-center justify-between">
-                        <label class="block text-xs font-bold text-brand-navy">책 제목 검색/입력</label>
+                        <label class="block text-xs font-bold text-brand-navy">책 제목 검색/입력 선택</label>
                         <button type="button" onclick="openBookSearchModal('new-ai-chat-book-title')" class="text-[10px] font-bold text-brand-sage hover:underline inline-flex items-center gap-1"><i data-lucide="search" class="w-3 h-3"></i> 실제 책 검색</button>
                     </div>
                     <div class="flex gap-2">
-                        <input id="new-ai-chat-book-title" type="text" placeholder="예: 코스모스, 데미안 등" 
+                        <input id="new-ai-chat-book-title" type="text" placeholder="선택 입력: 코스모스, 데미안 등" 
                                class="w-full px-4 py-3 bg-brand-ivory/50 border border-brand-ivoryDark rounded-xl focus:border-brand-sage outline-none text-sm font-semibold"
                                onkeypress="if(event.key === 'Enter') startNewAIChat()">
                         <button type="button" onclick="openBookSearchModal('new-ai-chat-book-title')" class="shrink-0 px-3 py-2 bg-brand-navy hover:bg-brand-navyLight text-white rounded-xl text-xs font-bold shadow transition-colors">검색</button>
@@ -1569,6 +1674,193 @@
                 <button onclick="startNewAIChat()" class="px-5 py-2 bg-brand-navy hover:bg-brand-navyLight text-white text-xs font-bold rounded-lg transition-colors shadow flex items-center gap-1.5">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 대화 시작
                 </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- BOOKMATE v2.0: 로그인 / 회원가입 화면 -->
+
+    <div id="guest-action-modal" class="fixed inset-0 z-[115] hidden bg-brand-navy/55 backdrop-blur-sm items-center justify-center p-4" onclick="if(event.target.id==='guest-action-modal') closeGuestActionModal()">
+        <div class="w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-brand-ivoryDark overflow-hidden animate-fadeIn">
+            <div class="p-6 text-center">
+                <button onclick="closeGuestActionModal()" class="absolute right-4 top-4 p-2 rounded-full hover:bg-brand-ivory text-gray-400 hover:text-brand-navy" aria-label="닫기"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <div id="guest-action-icon" class="w-16 h-16 rounded-2xl bg-brand-sageLight text-brand-sageDark flex items-center justify-center mx-auto text-3xl mb-4">👤</div>
+                <h3 id="guest-action-title" class="serif-title text-xl font-bold text-brand-navy leading-snug whitespace-pre-line">BOOKMATE가 되어
+다른 독자와 소통해보세요.</h3>
+                <p id="guest-action-desc" class="text-xs text-gray-500 leading-relaxed mt-3 whitespace-pre-line">북라운지 방문, 북메이트 신청, 인사하기 기능을 이용할 수 있습니다.</p>
+                <ul id="guest-action-list" class="mt-4 text-left text-xs text-brand-navy font-semibold space-y-2 bg-brand-ivory/60 rounded-2xl p-4">
+                    <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-brand-sageLight text-brand-sageDark flex items-center justify-center text-[10px]">✓</span><span>북라운지 방문</span></li>
+                    <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-brand-sageLight text-brand-sageDark flex items-center justify-center text-[10px]">✓</span><span>북메이트 신청</span></li>
+                    <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-brand-sageLight text-brand-sageDark flex items-center justify-center text-[10px]">✓</span><span>인사하기</span></li>
+                </ul>
+                <p class="text-[11px] text-gray-400 leading-relaxed mt-4">책은 혼자 읽어도 좋지만,<br>함께 이야기하면 더 오래 남습니다.</p>
+                <div class="grid grid-cols-2 gap-2 mt-5">
+                    <button onclick="closeGuestActionModal(); openAuthPage('login')" class="bg-brand-navy hover:bg-brand-navyLight text-white py-3 rounded-xl text-xs font-bold shadow-sm">로그인</button>
+                    <button onclick="closeGuestActionModal(); openAuthPage('signup')" class="bg-white hover:bg-brand-ivory border border-brand-ivoryDark text-brand-navy py-3 rounded-xl text-xs font-bold">회원가입</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="auth-screen" class="fixed inset-0 z-[120] bg-brand-ivory/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute -top-24 -left-24 w-80 h-80 bg-brand-sageLight rounded-full opacity-80 blur-3xl"></div>
+            <div class="absolute top-1/3 right-10 w-56 h-56 bg-amber-100 rounded-full opacity-80 blur-3xl"></div>
+            <div class="absolute -bottom-28 left-1/3 w-96 h-96 bg-[#EAF2E8] rounded-full opacity-60 blur-3xl"></div>
+        </div>
+        <div class="relative w-full max-w-6xl grid md:grid-cols-[0.9fr_1.1fr] gap-0 bg-white rounded-[2.25rem] shadow-2xl border border-white/80 overflow-hidden animate-fadeIn">
+            <button type="button" onclick="hideAuthScreen()" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/80 hover:bg-brand-ivory text-gray-500 flex items-center justify-center shadow-sm" title="닫기"><i data-lucide="x" class="w-4 h-4"></i></button>
+            <div class="relative bg-brand-navy text-white p-8 md:p-10 flex flex-col justify-between min-h-[620px] overflow-hidden">
+                <div class="absolute -right-16 -top-16 w-48 h-48 rounded-full bg-brand-sage/30 blur-2xl"></div>
+                <div class="absolute -left-10 bottom-28 w-40 h-40 rounded-full bg-white/10 blur-2xl"></div>
+                <div class="relative">
+                    <img src="assets/bookmate-logo.png" alt="BOOKMATE" class="w-17 h-17 rounded-3xl bg-white/10 p-2 mb-6 object-contain shadow-lg">
+                    <p class="text-xs font-bold tracking-[0.25em] text-brand-sageLight uppercase">BOOKMATE LOGIN</p>
+                    <h2 class="serif-title text-4xl font-bold mt-3 leading-tight">먼저 둘러보고,<br>필요할 때 로그인하세요.</h2>
+                    <p class="text-sm text-white/70 leading-relaxed mt-4">메인 화면은 그대로 열어두고, 로그인한 계정에 따라 토론방·독서모임·북라운지가 자연스럽게 연결됩니다.</p>
+                    <div class="grid grid-cols-3 gap-2 mt-7 text-center">
+                        <div class="rounded-2xl bg-white/10 border border-white/10 p-3"><b class="block text-lg">7</b><span class="text-[10px] text-white/55">가계정</span></div>
+                        <div class="rounded-2xl bg-white/10 border border-white/10 p-3"><b class="block text-lg">AI</b><span class="text-[10px] text-white/55">취향진단</span></div>
+                        <div class="rounded-2xl bg-white/10 border border-white/10 p-3"><b class="block text-lg">Guest</b><span class="text-[10px] text-white/55">둘러보기</span></div>
+                    </div>
+                </div>
+                <div class="relative space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="text-[11px] text-white/50 font-bold">테스트 가계정</div>
+                        <button type="button" onclick="continueAsGuest()" class="text-[11px] font-bold text-brand-sageLight hover:text-white underline underline-offset-4">게스트로 둘러보기</button>
+                    </div>
+                    <div id="demo-account-list" class="grid grid-cols-2 gap-2 text-xs"></div>
+                    <p class="text-[10px] text-white/45">가계정 비밀번호는 모두 <b>1234</b>입니다. 새 회원가입 계정은 이 브라우저에 저장됩니다.</p>
+                </div>
+            </div>
+            <div class="p-6 md:p-8 bg-white max-h-[90vh] overflow-y-auto custom-scrollbar">
+                <div class="flex p-1 bg-brand-ivory rounded-2xl mb-6">
+                    <button id="auth-login-tab" onclick="switchAuthMode('login')" class="flex-1 py-3 rounded-xl text-sm font-bold bg-white shadow text-brand-navy">로그인</button>
+                    <button id="auth-signup-tab" onclick="switchAuthMode('signup')" class="flex-1 py-3 rounded-xl text-sm font-bold text-gray-500">회원가입</button>
+                </div>
+
+                <form id="auth-login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-brand-navy mb-2">아이디</label>
+                        <input id="login-id" class="w-full rounded-xl border border-brand-ivoryDark bg-brand-ivory/40 px-4 py-3 text-sm outline-none focus:border-brand-sage" placeholder="예: moa01" autocomplete="username">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-brand-navy mb-2">비밀번호</label>
+                        <input id="login-password" type="password" class="w-full rounded-xl border border-brand-ivoryDark bg-brand-ivory/40 px-4 py-3 text-sm outline-none focus:border-brand-sage" placeholder="1234" autocomplete="current-password">
+                    </div>
+                    <button class="w-full py-3.5 rounded-xl bg-brand-navy text-white text-sm font-bold hover:bg-brand-navyLight transition-colors shadow-lg shadow-brand-navy/10">로그인</button>
+                    <button type="button" onclick="continueAsGuest()" class="w-full py-3.5 rounded-xl bg-brand-ivory text-brand-navy text-sm font-bold hover:bg-brand-ivoryDark transition-colors">게스트로 둘러보기</button>
+                    <div class="text-center text-xs text-gray-400">가계정 버튼을 누르면 아이디/비밀번호가 자동 입력됩니다.</div>
+                </form>
+
+                <form id="auth-signup-form" onsubmit="handleSignupSubmit(event)" class="space-y-4 hidden">
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-brand-navy mb-2">아이디</label>
+                            <input id="signup-id" class="w-full rounded-xl border border-brand-ivoryDark bg-brand-ivory/40 px-4 py-3 text-sm outline-none focus:border-brand-sage" placeholder="영문/숫자 4자 이상">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-brand-navy mb-2">닉네임</label>
+                            <input id="signup-nickname" class="w-full rounded-xl border border-brand-ivoryDark bg-brand-ivory/40 px-4 py-3 text-sm outline-none focus:border-brand-sage" placeholder="예: 책산책가">
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-brand-navy mb-2">비밀번호</label>
+                            <input id="signup-password" type="password" class="w-full rounded-xl border border-brand-ivoryDark bg-brand-ivory/40 px-4 py-3 text-sm outline-none focus:border-brand-sage" placeholder="4자 이상">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-brand-navy mb-2">비밀번호 확인</label>
+                            <input id="signup-password-confirm" type="password" class="w-full rounded-xl border border-brand-ivoryDark bg-brand-ivory/40 px-4 py-3 text-sm outline-none focus:border-brand-sage" placeholder="한 번 더 입력">
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-brand-navy mb-2">이름</label>
+                            <input id="signup-name" class="w-full rounded-xl border border-brand-ivoryDark bg-brand-ivory/40 px-4 py-3 text-sm outline-none focus:border-brand-sage" placeholder="실명">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-brand-navy mb-2">나이</label>
+                            <input id="signup-age" type="number" min="10" max="120" class="w-full rounded-xl border border-brand-ivoryDark bg-brand-ivory/40 px-4 py-3 text-sm outline-none focus:border-brand-sage" placeholder="나이">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-brand-navy mb-2">성별</label>
+                            <select id="signup-gender" class="w-full rounded-xl border border-brand-ivoryDark bg-brand-ivory/40 px-4 py-3 text-sm outline-none focus:border-brand-sage">
+                                <option value="">선택</option><option>여성</option><option>남성</option><option>선택 안 함</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-brand-navy mb-2">소속도서관</label>
+                        <div class="flex gap-2">
+                            <select id="signup-library" onchange="resetSignupLibraryVerification()" class="flex-1 rounded-xl border border-brand-ivoryDark bg-brand-ivory/40 px-4 py-3 text-sm outline-none focus:border-brand-sage">
+                                <option value="소속도서관 없음">소속도서관 없음</option>
+                                <option value="서울시립도서관">서울시립도서관</option>
+                                <option value="국립도서관">국립도서관</option>
+                                <option value="전북대표도서관">전북대표도서관</option>
+                                <option value="익산시립도서관">익산시립도서관</option>
+                            </select>
+                            <button type="button" onclick="verifySignupLibrary()" class="px-4 rounded-xl bg-brand-sage text-white text-xs font-bold hover:bg-brand-sageDark transition-colors">인증하기</button>
+                        </div>
+                        <div id="signup-library-verified" data-verified="false" class="mt-2 text-[11px] text-gray-400">아직 인증되지 않았습니다.</div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between gap-3 mb-2">
+                            <label class="block text-xs font-bold text-brand-navy">독서취향</label>
+                            <button type="button" onclick="openTasteDiagnosis()" class="px-3 py-1.5 rounded-full bg-brand-navy text-white text-[11px] font-bold hover:bg-brand-navyLight transition-colors">🤖 AI 독서취향 진단</button>
+                        </div>
+                        <p class="text-[11px] text-gray-400 mb-3">직접 선택하거나, AI 모아와 짧게 대화해서 자동으로 선택할 수 있어요. 최대 5개를 추천합니다.</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="소설" class="mr-1">📚 소설</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="에세이" class="mr-1">🌿 에세이</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="인문" class="mr-1">🧠 인문</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="경제" class="mr-1">💼 경제</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="재테크" class="mr-1">💰 재테크</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="과학" class="mr-1">🔬 과학</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="역사" class="mr-1">🕰 역사</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="예술" class="mr-1">🎨 예술</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="심리" class="mr-1">😊 심리</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="추리" class="mr-1">🕵 추리</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="판타지" class="mr-1">🧙 판타지</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="SF" class="mr-1">🚀 SF</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="그림책" class="mr-1">👶 그림책</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="고전" class="mr-1">📖 고전</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="시" class="mr-1">✍ 시</label>
+                            <label class="px-3 py-2 rounded-xl bg-brand-ivory/60 border border-brand-ivoryDark cursor-pointer"><input type="checkbox" name="signup-taste" value="여행" class="mr-1">🌍 여행</label>
+                        </div>
+                        <input type="hidden" id="signup-reading-type" value="">
+                        <input type="hidden" id="signup-reading-type-icon" value="">
+                        <div id="signup-ai-result" class="hidden mt-3 rounded-2xl bg-brand-sageLight/50 border border-brand-sage/20 p-4 text-sm"></div>
+                    </div>
+                    <button class="w-full py-3.5 rounded-xl bg-brand-navy text-white text-sm font-bold hover:bg-brand-navyLight transition-colors shadow-lg shadow-brand-navy/10">회원가입하고 BOOKMATE 시작하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOKMATE v2.0: AI 독서취향 진단 모달 -->
+    <div id="taste-diagnosis-modal" class="fixed inset-0 z-[130] bg-brand-navy/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-[2rem] border border-brand-ivoryDark w-full max-w-2xl overflow-hidden shadow-2xl max-h-[88vh] flex flex-col">
+            <div class="bg-brand-ivory p-5 border-b border-brand-ivoryDark flex justify-between items-center">
+                <div>
+                    <p class="text-[11px] font-bold tracking-[0.2em] text-brand-sageDark">AI READING TASTE</p>
+                    <h3 class="serif-title font-bold text-brand-navy text-xl mt-1">모아가 찾아주는 나의 독서취향</h3>
+                </div>
+                <button onclick="closeTasteDiagnosis()" class="w-9 h-9 rounded-full hover:bg-white text-gray-500 flex items-center justify-center">✕</button>
+            </div>
+            <div id="taste-diagnosis-body" class="p-6 overflow-y-auto custom-scrollbar space-y-5">
+                <div class="flex gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-brand-navy text-white flex items-center justify-center shrink-0">🤖</div>
+                    <div class="bg-brand-ivory rounded-2xl rounded-tl-sm px-4 py-3 text-sm text-brand-navy leading-relaxed">
+                        안녕하세요. 저는 BOOKMATE AI 모아예요.<br>몇 가지 질문으로 독서취향을 함께 찾아드릴게요.
+                    </div>
+                </div>
+                <div id="taste-question-area"></div>
+            </div>
+            <div class="p-4 bg-white border-t border-brand-ivoryDark flex gap-2">
+                <button type="button" onclick="resetTasteDiagnosis()" class="px-4 py-3 rounded-xl bg-brand-ivory text-brand-navy text-xs font-bold">처음부터</button>
+                <button type="button" onclick="closeTasteDiagnosis()" class="px-4 py-3 rounded-xl bg-gray-100 text-gray-500 text-xs font-bold">나중에 하기</button>
             </div>
         </div>
     </div>
