@@ -1,0 +1,16 @@
+{
+  "name": "bookmate-v3-netlify-gemini",
+  "version": "3.0.0",
+  "description": "BOOKMATE full project with Netlify Functions and Gemini API",
+  "type": "module",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo \"BOOKMATE static build ready\""
+  },
+  "dependencies": {
+    "@google/genai": "latest"
+  },
+  "devDependencies": {
+    "netlify-cli": "latest"
+  }
+}

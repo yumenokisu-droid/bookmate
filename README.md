@@ -1,10 +1,32 @@
-# BOOKMATE v1.9 Final
+# BOOKMATE v3.0 - Netlify + Gemini
 
-적용 내용
-- 새 BOOKMATE 로고 공식 적용 및 favicon/PWA manifest 추가
-- 프로필 시스템 최종 안정화: 얼굴 모아 4종, 내 사진 첨부, 미리보기, 저장 유지
-- 기본 사용자 프로필 모아1 보정 및 AI 프로필 유지
-- 메인 「질문에서 모임이 시작됩니다」 책 표지 로딩 보정
-- 홈 상단 ‘오늘의 북메이트’ 라이브 브리핑 추가
-- 프로필 클릭 시 확대 보기/프로필 변경 연결
-- UI 눌림 효과, 카드 hover 등 최종 디테일 보정
+실제 BOOKMATE 전체 프로젝트를 기준으로 Netlify Functions와 Gemini API를 연결한 버전입니다.
+
+## GitHub에 올릴 것
+- `public/`
+- `netlify/`
+- `package.json`
+- `netlify.toml`
+- `README.md`
+- `.env.example`
+
+## 올리면 안 되는 것
+- `.env`
+- `node_modules/`
+
+## Netlify 설정
+- Build command: `npm install`
+- Publish directory: `public`
+- Functions directory: `netlify/functions`
+
+## 환경변수
+Netlify > Site configuration > Environment variables 에 추가:
+
+`GEMINI_API_KEY = 본인의 Gemini API 키`
+
+선택:
+
+`GEMINI_MODEL = gemini-2.5-flash`
+
+## 참고
+공유 링크는 현재 무료 서버리스 임시 저장 방식입니다. 공모전 시연용으로는 사용할 수 있지만, 영구 공유 링크가 필요하면 Supabase/Firebase 같은 DB를 추가해야 합니다.
